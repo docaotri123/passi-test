@@ -1,0 +1,5 @@
+authorizer:
+    description: Authorizer
+    handler: functions/v1/auth.authorizer
+seed:
+    handler: functions/v1/seed.create

@@ -1,0 +1,44 @@
+{
+    "name": "passii",
+    "version": "1.0.0",
+    "scripts": {
+        "offline": "sls offline --stage local --httpPort 5000",
+        "seed:create": "./bin/init_migration.sh",
+        "seed:local": "node seeds stage=local",
+        "seed:dev": "sls invoke -f seed --stage dev --aws-profile passii_dev",
+        "deploy:dev": "sls deploy --stage dev --aws-profile passii_dev"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "ajv": "^6.12.6",
+        "ajv-i18n": "^3.5.0",
+        "js-yaml": "^4.1.0",
+        "ramda": "^0.28.0"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write",
+            "git add"
+        ]
+    },
+    "devDependencies": {
+        "aws-info": "^1.2.0",
+        "eslint": "^8.17.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-jest": "^26.5.3",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.6.2",
+        "serverless-api-gateway-caching": "^1.8.1",
+        "serverless-apigw-binary": "^0.4.4",
+        "serverless-offline": "^8.8.0",
+        "serverless-provisioned-concurrency-autoscaling": "^1.9.1"
+    }
+}

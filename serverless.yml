@@ -1,0 +1,47 @@
+service: passii
+
+plugins:
+    - serverless-offline
+    - serverless-apigw-binary
+    - ./plugins/stacks/split-stacks.js
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    stage: ${opt:stage, 'dev'}
+    region: ${opt:region, 'ap-southeast-1'}
+    timeout: ${opt:timeout, 10}
+    versionFunctions: false
+    environment: ${self:custom.env}
+    # role: ${self:custom.env.LAMBDA_ROLE_ARN}
+    vpc:
+        securityGroupIds:
+            - ${self:custom.env.SECURITY_GROUP_ID}
+        subnetIds:
+            - ${self:custom.env.SUBNET_ID_A}
+            - ${self:custom.env.SUBNET_ID_B}
+            - ${self:custom.env.SUBNET_ID_C}
+
+custom:
+    splitStacks:
+        perFeature: true
+        perFunction: false
+        perType: false
+        perGroupFunction: false
+    apigwBinary:
+        types:
+            - 'multipart/form-data'
+    env: ${file(./serverless.${self:provider.stage}.env.yml)}
+    stackName: ${opt:stackName, 'dev'}
+    projectName: ${opt:projectName, 'passii'}
+    authorizer:
+        name: authorizer
+        type: request
+        resultTtlInSeconds: 0
+        identitySource: method.request.header.Authorization
+functions:
+    # - ${file(resources/functions.yml)}
+    - ${file(resources/functions/user.yml)}
+    
+# resources:
+#     - ${file(resources/gateway.yml)}

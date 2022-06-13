@@ -1,0 +1,16 @@
+Resources:
+    ResourceBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: ${self:custom.env.S3_BUCKET}
+            AccessControl: Private
+            CorsConfiguration:
+                CorsRules:
+                    - AllowedOrigins:
+                          - '*'
+                      AllowedHeaders:
+                          - '*'
+                      AllowedMethods:
+                          - PUT
+                          - GET
+                          - POST
