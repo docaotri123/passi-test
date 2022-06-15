@@ -1,4 +1,4 @@
-const Response = require('../../shared/utils/response');
+const Response = require('../../utils/response');
 const beforeExecute = require('./beforeExecute');
 const afterExecute = require('./afterExecute');
 const captureHeaders = require('./captureHeaders');

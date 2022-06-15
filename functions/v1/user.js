@@ -10,6 +10,12 @@ const userFns = {
 
         res.status(HttpStatus.Created).data(data);
     },
+    signIn: async ({ event, res }) => {
+        const { requestData } = event;
+        const data = await UserService.signIn(requestData);
+
+        res.status(HttpStatus.Ok).data(data);
+    },
 };
 
 module.exports = {
@@ -17,5 +23,8 @@ module.exports = {
         fn: userFns.signUp,
         schema: UserDtos.signUp
     }),
-
+    signIn: appWrapper({
+        fn: userFns.signIn,
+        schema: UserDtos.signIn
+    }),
 };

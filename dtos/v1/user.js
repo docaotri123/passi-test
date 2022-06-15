@@ -1,15 +1,26 @@
 module.exports = {
     signUp: {
         properties: {
-            email: {
+            phone: {
                 type: 'string',
-                format: 'email',
                 lowerCase: true,
             },
             password: { type: 'string' },
         },
-        required: ['email', 'password', 'firstName', 'lastName', 'roleName'],
+        required: ['phone', 'password'],
         coerceTypes: true,
         additionalProperties: false,
-    }
+    },
+    signIn: {
+        properties: {
+            phone: {
+                type: 'string',
+                lowerCase: true,
+            },
+            password: { type: 'string' }
+        },
+        required: ['phone', 'password'],
+        coerceTypes: true,
+        additionalProperties: false,
+    },
 }

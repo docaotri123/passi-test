@@ -1,12 +1,12 @@
-const {
-    closeMongoConnection,
-    closeNeptuneConnection,
-} = require('../../models');
+// const {
+//     closeMongoConnection,
+//     closeNeptuneConnection,
+// } = require('../../models');
 
 module.exports = async ({ useMongoConnection }) => {
-    if (useMongoConnection) {
-        await closeMongoConnection();
-    }
+    // if (useMongoConnection) {
+    //     await closeMongoConnection();
+    // }
 
-    closeNeptuneConnection();
+    // closeNeptuneConnection();
 };

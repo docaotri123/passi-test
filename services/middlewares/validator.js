@@ -2,20 +2,15 @@ const Ajv = require('ajv');
 const localize = require('ajv-i18n');
 const { Types } = require('mongoose');
 const moment = require('moment');
-const { log } = require('../../shared/utils');
-const { isUUID } = require('../../shared/utils/uuid');
+const { log } = require('../../utils/logging');
 
 const AppError = require('../appError');
-const {
-    FILTER_ENTERPRISES_BY_FIELDS,
-    FILTER_CENTERS_BY_FIELDS,
-} = require('../../shared/utils/constant');
 
 const isValidTimeZone = (tz) => {
     if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
         log('Time zones are not available in this environment');
 
-        return false;
+        return false
     }
 
     try {
@@ -80,9 +75,6 @@ const customValidator = () => {
         objectId: {
             validate: (schemaValue, data) => Types.ObjectId.isValid(data),
         },
-        uuid: {
-            validate: (schemaValue, data) => isUUID(data),
-        },
         isValidTimeZone: {
             validate: (schemaValue, data) => isValidTimeZone(data),
         },
@@ -124,24 +116,6 @@ const customValidator = () => {
                 return (data, dataPath, parentData, key) => {
                     parentData[key] = JSON.parse(data); //eslint-disable-line
                 };
-            },
-        },
-        isValidFilterEnterprise: {
-            validate: (schemaValue, data) => {
-                const fields = data.trim().split(',');
-
-                return fields.every((field) =>
-                    FILTER_ENTERPRISES_BY_FIELDS.includes(field)
-                );
-            },
-        },
-        isValidFilterCenter: {
-            validate: (schemaValue, data) => {
-                const fields = data.trim().split(',');
-
-                return fields.every((field) =>
-                    FILTER_CENTERS_BY_FIELDS.includes(field)
-                );
             },
         },
         isValidRange: {

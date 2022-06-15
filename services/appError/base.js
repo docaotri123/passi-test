@@ -1,4 +1,4 @@
-const { log } = require('../../shared/utils/logging');
+const { log } = require('../../utils/logging');
 
 class AppError extends Error {
     /**
