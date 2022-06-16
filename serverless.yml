@@ -42,6 +42,7 @@ custom:
 functions:
     # - ${file(resources/functions.yml)}
     - ${file(resources/functions/user.yml)}
+    - ${file(resources/functions/otp.yml)}
     
 # resources:
 #     - ${file(resources/gateway.yml)}

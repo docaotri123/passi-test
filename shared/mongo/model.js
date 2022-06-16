@@ -14,14 +14,6 @@ module.exports = ({ name, schema, options = {}, query = {}, statics = {} }) => {
             type: Number,
             default: 0,
         },
-        updatedBy: {
-            type: String,
-            default: null,
-        },
-        effectiveAt: {
-            type: Number,
-            default: 0,
-        },
     };
     const defaultOptions = {
         read: 'secondaryPreferred',

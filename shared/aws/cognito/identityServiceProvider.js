@@ -8,6 +8,19 @@ const cognitoIdentityServiceProvider = () => {
     });
 }
 
+const adminConfirmSignUp = async ({ username, metadata = {} }) => {
+    const UserPoolId = await getEnv('COGNITO_USER_POOL_ID');
+    const params = {
+        UserPoolId,
+        Username: username,
+        ClientMetadata: metadata,
+    };
+
+    return cognitoIdentityServiceProvider()
+        .adminConfirmSignUp(params)
+        .promise();
+};
+
 const signUp = async ({ username, password }) => {
     try {
         const ClientId = await getEnv('COGNITO_CLIENT_ID');
@@ -67,6 +80,7 @@ const initiateAuth = async ({ username, password }) => {
 };
 
 module.exports = {
+    adminConfirmSignUp,
     signUp,
     initiateAuth
 }

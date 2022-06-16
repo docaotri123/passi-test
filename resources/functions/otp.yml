@@ -1,0 +1,3 @@
+2triggerSendOTP:
+    handler: functions/v1/otp.triggerSendOTP
+    description: Send OTP

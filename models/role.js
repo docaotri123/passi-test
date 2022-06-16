@@ -1,4 +1,5 @@
 const { mongoModel } = require('.');
+const { ROLE } = require('../utils/constant');
 
 const roleSchema = ({ Schema }) => ({
     name: {
@@ -8,11 +9,11 @@ const roleSchema = ({ Schema }) => ({
     type: {
         type: String,
         enum: [
-            'seller',
-            'buyer',
-            'admin'
+            ROLE.ADMIN,
+            ROLE.SELLER,
+            ROLE.BUYER
         ],
-        default: 'buyer',
+        default: ROLE.BUYER,
     },
     permissions: [
         {

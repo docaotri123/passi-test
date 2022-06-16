@@ -1,37 +1,36 @@
 const { mongoModel } = require('.');
+const { OPT_TYPE } = require('../utils/constant');
 
-const userSchema = ({ Schema }) => ({
-    fullName: {
-        type: String
-    },
-    firstName: {
-        type: String
-    },
-    lastName: {
-        type: String
-    },
-    gender: {
-        type: String,
-        enum: ['male', 'female']
-    },
-    birthday: {
-        type: Number
-    },
-    email: {
+const otpSchema = ({ Schema }) => ({
+    userId: {
         type: String
     },
     phone: {
-        type: String,
-        require: true
-    },
-    avatar: {
         type: String
     },
+    code: {
+        type: String
+    },
+    status: {
+        type: Boolean,
+        default: false
+    },
+    usageCount: {
+        type: Number,
+        default: 3
+    },
+    type: {
+        type: String,
+        enum: [
+            OPT_TYPE.SIGN_UP,
+            OPT_TYPE.CHANGE_PASSWORD
+        ]
+    }
 });
 
 module.exports = mongoModel({
-    name: 'User',
-    schema: userSchema,
+    name: 'Otp',
+    schema: otpSchema,
     options: {
         toJSON: {
             transform: (model) => {
