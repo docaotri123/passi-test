@@ -5,4 +5,5 @@ module.exports = {
     LANGUAGES: ['en'],
     NOREPLY_EMAIL: 'noreply@smtp.knovo.io',
     HELLO_EMAIL: 'hello@knovo.io',
+    OTP_SIGN_UP_EXPIRED: 1 // hour
 };

@@ -2,22 +2,29 @@ const AppError = require('../appError');
 const { CognitoIdentityServiceProvider } = require('../../shared/aws/cognito');
 const { log } = require('../../utils/logging');
 const { invoke } = require('../../shared/aws/lambda');
+const constant = require('../../utils/constant');
+const userModel = require('../../models/user');
 
 module.exports.signUp = async ({
     phone,
     password,
 }) => {
-    // const { data: userId } = await CognitoIdentityServiceProvider.signUp({
-    //     username: phone,
-    //     password,
-    // });
+    const { OPT_TYPE } = constant;
+    const { data: userId } = await CognitoIdentityServiceProvider.signUp({
+        username: phone,
+        password,
+    });
+    const user = await userModel.create({
+        userId,
+        phone
+    });
 
     await invoke({
-        body: { name: 'test' },
+        body: { userId, type: OPT_TYPE.SIGN_UP },
         functionName: `${process.env.FUNCTION_PREFIX}-2triggerSendOTP`,
     });
 
-    return { name: '' };
+    return user._id;
 }
 
 module.exports.signIn = async ({ phone, password }) => {

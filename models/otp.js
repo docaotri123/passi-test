@@ -3,13 +3,16 @@ const { OPT_TYPE } = require('../utils/constant');
 
 const otpSchema = ({ Schema }) => ({
     userId: {
-        type: String
+        type: String,
+        require: true
     },
     phone: {
-        type: String
+        type: String,
+        require: true
     },
     code: {
-        type: String
+        type: String,
+        require: true
     },
     status: {
         type: Boolean,

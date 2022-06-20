@@ -1,14 +1,21 @@
 const { mongoModel } = require('.');
 
 const userSchema = ({ Schema }) => ({
+    userId: {
+        type: String,
+        require: true
+    },
     fullName: {
-        type: String
+        type: String,
+        default: ''
     },
     firstName: {
-        type: String
+        type: String,
+        default: ''
     },
     lastName: {
-        type: String
+        type: String,
+        default: ''
     },
     gender: {
         type: String,
@@ -27,6 +34,10 @@ const userSchema = ({ Schema }) => ({
     avatar: {
         type: String
     },
+    lastLogin: {
+        type: Number,
+        default: 0,
+    },
 });
 
 module.exports = mongoModel({
@@ -44,7 +55,8 @@ module.exports = mongoModel({
                     birthday: model.birthday,
                     email: model.email,
                     phone: model.phone,
-                    avatar: model.avatar
+                    avatar: model.avatar,
+                    lastLogin: model.lastLogin
                 };
 
                 return response;
