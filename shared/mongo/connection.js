@@ -10,7 +10,7 @@ module.exports.createConnection = async ({ endpoint, options = {} }) => {
     const defaultOptions = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        poolSize: 1,
+        // poolSize: 1,
         readPreference: 'secondaryPreferred',
     };
 

@@ -41,7 +41,7 @@ module.exports = ({ name, schema, options = {}, query = {}, statics = {} }) => {
         modelSchema.statics[fn] = statics[fn];
     });
 
-    mongoose.set('useFindAndModify', false);
+    // mongoose.set('useFindAndModify', false);
     modelSchema.plugin(mongoosePaginate);
     modelSchema.plugin(aggregatePaginate);
 

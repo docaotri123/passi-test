@@ -1,6 +1,5 @@
 const R = require('ramda');
-
-// const { createMongoConnection } = require('../../models');
+const { createMongoConnection } = require('../../models');
 const validator = require('../middlewares/validator');
 // const upload = require('../middlewares/upload');
 
@@ -16,9 +15,9 @@ module.exports = async ({ schema, event, useMongoConnection }) => {
         _event = validator({ schema, event, lang });
     }
 
-    // if (useMongoConnection) {
-    //     await createMongoConnection();
-    // }
+    if (useMongoConnection) {
+        await createMongoConnection();
+    }
 
     return {
         event: _event,

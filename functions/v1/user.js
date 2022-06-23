@@ -21,7 +21,8 @@ const userFns = {
 module.exports = {
     signUp: appWrapper({
         fn: userFns.signUp,
-        schema: UserDtos.signUp
+        schema: UserDtos.signUp,
+        useMongoConnection: true
     }),
     signIn: appWrapper({
         fn: userFns.signIn,

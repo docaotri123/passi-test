@@ -1,4 +1,4 @@
-module.exports.generateOTP = (digit) {
+module.exports.generateOTP = (digit) => {
 
     // Declare a digits variable 
     // which stores all digits
