@@ -34,6 +34,8 @@ module.exports = {
         new AppError('UserInternalServerError', HttpStatus.InternalServerError),
     UserPhoneExists: () =>
         new AppError('UserPhoneExists', HttpStatus.BadRequest),
+    IncorrectUsernameOrPassword: () =>
+        new AppError('IncorrectUsernameOrPassword', HttpStatus.BadRequest),
     OtpIsWrong: (data) =>
         new AppError('OtpIsWrong', HttpStatus.BadRequest, [], null, data),
     OtpNotFound: () =>

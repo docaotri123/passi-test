@@ -35,7 +35,7 @@ module.exports = {
         schema: UserDtos.signIn
     }),
     verifyAccount: appWrapper({
-        fn: userFns.signIn,
+        fn: userFns.verifyAccount,
         schema: UserDtos.verifyAccount,
         useMongoConnection: true
     }),

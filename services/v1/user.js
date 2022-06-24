@@ -56,10 +56,6 @@ module.exports.signIn = async ({ phone, password }) => {
             throw AppError.GeneralBadRequest();
         }
 
-        if (error.error === 'UserEmailExists') {
-            throw AppError.UserEmailExists();
-        }
-
         throw AppError.IncorrectUsernameOrPassword();
     }
 };
@@ -70,9 +66,15 @@ module.exports.verifyAccount = async ({
     type
 }) => {
     const now = Date.now();
-    const opt = await otpModel.findOne({ status: false, expiredAt: { $lt: now }, type, phone }).exec();
+    const otp = await otpModel.findOne({
+        status: false, 
+        expiredAt: { $gt: now },
+        usageCount: { $gt: 0 },
+        type,
+        phone 
+    }).exec();
 
-    if (!opt) {
+    if (!otp) {
         return AppError.OtpNotFound();
     }
 
@@ -81,12 +83,15 @@ module.exports.verifyAccount = async ({
     }
 
     if (otp.code !== code) {
-        await otpModel.updateOne({ _id: opt.id }, { $inc: { usageCount: -1 } });
+        await otpModel.updateOne({ _id: otp.id }, { $inc: { usageCount: -1 } });
 
         return AppError.OtpIsWrong({ usageCount:  otp.usageCount - 1 });
     }
 
-    await CognitoIdentityServiceProvider.adminConfirmSignUp({ username: phone });
+    await Promise.all([
+        CognitoIdentityServiceProvider.adminConfirmSignUp({ username: phone }),
+        otpModel.updateOne({ _id: otp.id }, { status: true })
+    ]);
 
     return { status: 'ok' };
 };

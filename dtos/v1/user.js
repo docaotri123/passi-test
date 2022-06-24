@@ -37,5 +37,5 @@ module.exports = {
         required: ['phone', 'code', 'type'],
         coerceTypes: true,
         additionalProperties: false,
-    },s
+    },
 }
