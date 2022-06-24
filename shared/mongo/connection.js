@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 let dbConnection = null;
 
 module.exports.createConnection = async ({ endpoint, options = {} }) => {
-    if (dbConnection && dbConnection.connection.readyState === 1) {
+    const isConnected = dbConnection && dbConnection.connection.readyState === 1;
+
+    if (isConnected && process.env.NODE_ENV === 'local') {
+        dbConnection = null;
+    }
+
+    if (isConnected) {
         return dbConnection;
     }
 

@@ -10,21 +10,27 @@ module.exports.signUp = async ({
     password,
 }) => {
     const { OPT_TYPE } = constant;
+    const user = await userModel.findOne({ phone }).exec();
+
+    if (user) {
+        return AppError.UserPhoneExists();
+    }
+
     const { data: userId } = await CognitoIdentityServiceProvider.signUp({
         username: phone,
         password,
     });
-    const user = await userModel.create({
+    const userCreated = await userModel.create({
         userId,
         phone
-    });
+    })
 
     await invoke({
         body: { userId, type: OPT_TYPE.SIGN_UP },
         functionName: `${process.env.FUNCTION_PREFIX}-2triggerSendOTP`,
     });
 
-    return user._id;
+    return userCreated._id;
 }
 
 module.exports.signIn = async ({ phone, password }) => {

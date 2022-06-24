@@ -6,6 +6,7 @@ module.exports.getMoment = () => {
 
 module.exports.addTime = (datetime, unit, value) => {
     const addUnitValue = {
+        'h': moment(datetime).add(value, 'hours'),
         'd': moment(datetime).add(value, 'days'),
         'w': moment(datetime).add(value, 'weeks'),
         'm': moment(datetime).add(value, 'months'),
