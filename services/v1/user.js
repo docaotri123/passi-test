@@ -4,6 +4,7 @@ const { log } = require('../../utils/logging');
 const { invoke } = require('../../shared/aws/lambda');
 const constant = require('../../utils/constant');
 const userModel = require('../../models/user');
+const otpModel = require('../../models/otp');
 
 module.exports.signUp = async ({
     phone,
@@ -61,4 +62,31 @@ module.exports.signIn = async ({ phone, password }) => {
 
         throw AppError.IncorrectUsernameOrPassword();
     }
+};
+
+module.exports.verifyAccount = async ({
+    phone,
+    code,
+    type
+}) => {
+    const now = Date.now();
+    const opt = await otpModel.findOne({ status: false, expiredAt: { $lt: now }, type, phone }).exec();
+
+    if (!opt) {
+        return AppError.OtpNotFound();
+    }
+
+    if (otp.usageCount < 1) {
+        return AppError.OtpIsInvalid();
+    }
+
+    if (otp.code !== code) {
+        await otpModel.updateOne({ _id: opt.id }, { $inc: { usageCount: -1 } });
+
+        return AppError.OtpIsWrong({ usageCount:  otp.usageCount - 1 });
+    }
+
+    await CognitoIdentityServiceProvider.adminConfirmSignUp({ username: phone });
+
+    return { status: 'ok' };
 };

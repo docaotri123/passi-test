@@ -11,5 +11,5 @@ const ROLE = {
 
 module.exports = {
     OPT_TYPE,
-    ROLE
+    ROLE,
 }

@@ -16,6 +16,12 @@ const userFns = {
 
         res.status(HttpStatus.Ok).data(data);
     },
+    verifyAccount: async ({ event, res }) => {
+        const { requestData } = event;
+        const data = await UserService.verifyAccount(requestData);
+
+        res.status(HttpStatus.Ok).data(data);
+    },
 };
 
 module.exports = {
@@ -27,5 +33,10 @@ module.exports = {
     signIn: appWrapper({
         fn: userFns.signIn,
         schema: UserDtos.signIn
+    }),
+    verifyAccount: appWrapper({
+        fn: userFns.signIn,
+        schema: UserDtos.verifyAccount,
+        useMongoConnection: true
     }),
 };
