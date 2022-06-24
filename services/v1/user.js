@@ -27,7 +27,7 @@ module.exports.signUp = async ({
     })
 
     await invoke({
-        body: { userId, type: OPT_TYPE.SIGN_UP },
+        body: { userId, phone, type: OPT_TYPE.SIGN_UP },
         functionName: `${process.env.FUNCTION_PREFIX}-2triggerSendOTP`,
     });
 
