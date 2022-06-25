@@ -141,6 +141,10 @@ module.exports = class PerFeatureFunction extends BaseStrategy {
             return 'user';
         }
 
+        if (normalizedLambdaName.toLowerCase().startsWith('2')) {
+            return 'otp';
+        }
+
         return normalizedLambdaName;
     }
 };
