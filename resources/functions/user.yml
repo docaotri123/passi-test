@@ -3,22 +3,22 @@
     description: User signUp
     events:
         - http:
-              path: v1/user/sign-up
-              method: post
-              cors: true
+            path: v1/user/sign-up
+            method: post
+            cors: true
 1signIn:
     handler: functions/v1/user.signIn
     description: User signIn
     events:
         - http:
-              path: v1/user/sign-in
-              method: post
-              cors: true
+            path: v1/user/sign-in
+            method: post
+            cors: true
 1verifyAccount:
     handler: functions/v1/user.verifyAccount
     description: User verify account
     events:
         - http:
-              path: v1/user/verification
-              method: post
-              cors: true
+            path: v1/user/verification
+            method: post
+            cors: true
