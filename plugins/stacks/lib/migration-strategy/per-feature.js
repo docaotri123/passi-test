@@ -137,6 +137,10 @@ module.exports = class PerFeatureFunction extends BaseStrategy {
 
     // Can be overloaded
     getNestedStackName(normalizedLambdaName) {
+        if (normalizedLambdaName.toLowerCase().startsWith('0')) {
+            return 'base';
+        }
+
         if (normalizedLambdaName.toLowerCase().startsWith('1')) {
             return 'user';
         }

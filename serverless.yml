@@ -7,7 +7,7 @@ plugins:
 
 provider:
     name: aws
-    runtime: nodejs12.x
+    runtime: nodejs16.x
     stage: ${opt:stage, 'dev'}
     region: ${opt:region, 'ap-southeast-1'}
     timeout: ${opt:timeout, 10}
@@ -40,7 +40,7 @@ custom:
         resultTtlInSeconds: 0
         identitySource: method.request.header.Authorization
 functions:
-    # - ${file(resources/functions.yml)}
+    - ${file(resources/functions.yml)}
     - ${file(resources/functions/user.yml)}
     - ${file(resources/functions/otp.yml)}
     
