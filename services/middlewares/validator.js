@@ -70,6 +70,13 @@ const isFormatRecoveryEmail = (email) => {
     return re.test(email);
 };
 
+const isValidPhoneFormat = (phone) => {
+    const regex = /^[\+][[0-9]{3}]?[0-9]{3}]?[0-9]{4,6}$/im;
+
+    return regex.test(phone);
+};
+
+
 const customValidator = () => {
     return {
         objectId: {
@@ -80,6 +87,9 @@ const customValidator = () => {
         },
         isValidFormatPassword: {
             validate: (schemaValue, data) => isValidFormatPassword(data),
+        },
+        isValidPhoneFormat: {
+            validate: (_, data) => isValidPhoneFormat(data),
         },
         isFormatRecoveryEmail: {
             validate: (schemaValue, data) => isFormatRecoveryEmail(data),
