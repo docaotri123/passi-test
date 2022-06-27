@@ -71,11 +71,10 @@ const isFormatRecoveryEmail = (email) => {
 };
 
 const isValidPhoneFormat = (phone) => {
-    const regex = /^[\+][[0-9]{3}]?[0-9]{3}]?[0-9]{4,6}$/im;
+    const regex = /^[\+][[0-9]{3}]?[0-9]{3}]?[0-9]{4,6}$/gi;
 
     return regex.test(phone);
 };
-
 
 const customValidator = () => {
     return {

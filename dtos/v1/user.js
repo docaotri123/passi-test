@@ -5,9 +5,9 @@ module.exports = {
         properties: {
             phone: {
                 type: 'string',
-                lowerCase: true,
+                isValidPhoneFormat: true,
             },
-            password: { type: 'string' },
+            password: { type: 'string', isValidFormatPassword: true },
         },
         required: ['phone', 'password'],
         coerceTypes: true,
@@ -17,7 +17,7 @@ module.exports = {
         properties: {
             phone: {
                 type: 'string',
-                lowerCase: true,
+                isValidPhoneFormat: true,
             },
             password: { type: 'string' }
         },
@@ -29,7 +29,7 @@ module.exports = {
         properties: {
             phone: {
                 type: 'string',
-                lowerCase: true,
+                isValidPhoneFormat: true,
             },
             code: { type: 'string' },
             type: { type: 'string', enum: [OPT_TYPE.SIGN_UP] }
