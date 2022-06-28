@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { getEnv } = require('../ssm');
+const { getEnvs } = require('../ssm');
 
 const cognitoIdentityServiceProvider = () => {
     return new AWS.CognitoIdentityServiceProvider({
@@ -9,7 +9,7 @@ const cognitoIdentityServiceProvider = () => {
 }
 
 const adminConfirmSignUp = async ({ username, metadata = {} }) => {
-    const UserPoolId = await getEnv('COGNITO_USER_POOL_ID');
+    const UserPoolId = await getEnvs(['COGNITO_USER_POOL_ID']);
     const params = {
         UserPoolId,
         Username: username,

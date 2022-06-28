@@ -19,19 +19,32 @@ module.exports.getEnvs = async (names) => {
         }, {});
     }
 
-    const params = {
-        Names: names.map((name) => `${process.env.SSM_PREFIX}/${name}`),
-        WithDecryption: false,
+    // const params = {
+    //     Names: names.map((name) => `${process.env.SSM_PREFIX}/${name}`),
+    //     WithDecryption: false,
+    // };
+    // const { Parameters } = await ssm.getParameters(params).promise();
+    // const data = Parameters.reduce((result, parameter) => {
+    //     return {
+    //         ...result,
+    //         [parameter.Name.split('/').slice(-1)[0]]: parameter.Value,
+    //     };
+    // }, {});
+
+    // return data;
+    const envs = {
+        COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID,
+        COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID,
+        COGNITO_USER_POOL_NAME: process.env.COGNITO_USER_POOL_NAME,
+        FUNCTION_PREFIX: process.env.FUNCTION_PREFIX
     };
-    const { Parameters } = await ssm.getParameters(params).promise();
-    const data = Parameters.reduce((result, parameter) => {
+
+    return names.reduce((result, name) => {
         return {
             ...result,
-            [parameter.Name.split('/').slice(-1)[0]]: parameter.Value,
+            [name]: process.env[name],
         };
-    }, {});
-
-    return data;
+    }, {}); 
 };
 
 module.exports.getEnv = async (name) => {
