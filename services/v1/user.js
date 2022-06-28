@@ -36,15 +36,20 @@ module.exports.signUp = async ({
 
 module.exports.signIn = async ({ phone, password }) => {
     try {
+        const [user, result] = await Promise.all([
+            userModel.findOne({ phone, isVerified: true }).exec(),
+            CognitoIdentityServiceProvider.initiateAuth(
+                {
+                    username: phone,
+                    password,
+                }
+            )
+        ]);
+        const { userId, fullName, firstName, lastName, isVerified, createdAt, avatar } = user;
 
-        const result = await CognitoIdentityServiceProvider.initiateAuth(
-            {
-                username: phone,
-                password,
-            }
-        );
+        await userModel.updateOne({ phone }, { lastLogin: Date.now() });
 
-       return result;
+        return { result, user: { userId, fullName, firstName, lastName, phone, isVerified, createdAt, avatar }};
     } catch (error) {
         log(error);
 
@@ -90,7 +95,17 @@ module.exports.verifyAccount = async ({
 
     await Promise.all([
         CognitoIdentityServiceProvider.adminConfirmSignUp({ username: phone }),
-        otpModel.updateOne({ _id: otp.id }, { status: true })
+        CognitoIdentityServiceProvider.adminUpdateUserAttributes({
+            id: phone,
+            attributes: [
+                {
+                    Name: 'phone_number_verified',
+                    Value: 'true',
+                },
+            ],
+        }),
+       otpModel.updateOne({ _id: otp.id }, { status: true }),
+       userModel.updateOne({ phone }, { isVerified: true })
     ]);
 
     return { status: 'ok' };

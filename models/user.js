@@ -3,7 +3,8 @@ const { mongoModel } = require('.');
 const userSchema = ({ Schema }) => ({
     userId: {
         type: String,
-        require: true
+        required: true,
+        unique: true
     },
     fullName: {
         type: String,
@@ -29,10 +30,15 @@ const userSchema = ({ Schema }) => ({
     },
     phone: {
         type: String,
-        require: true
+        required: true,
+        unique: true
     },
     avatar: {
         type: String
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
     },
     lastLogin: {
         type: Number,
@@ -56,7 +62,8 @@ module.exports = mongoModel({
                     email: model.email,
                     phone: model.phone,
                     avatar: model.avatar,
-                    lastLogin: model.lastLogin
+                    lastLogin: model.lastLogin,
+                    isVerified: model.isVerified
                 };
 
                 return response;

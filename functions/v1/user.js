@@ -32,7 +32,8 @@ module.exports = {
     }),
     signIn: appWrapper({
         fn: userFns.signIn,
-        schema: UserDtos.signIn
+        schema: UserDtos.signIn,
+        useMongoConnection: true
     }),
     verifyAccount: appWrapper({
         fn: userFns.verifyAccount,

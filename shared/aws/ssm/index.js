@@ -42,7 +42,7 @@ module.exports.getEnvs = async (names) => {
     return names.reduce((result, name) => {
         return {
             ...result,
-            [name]: process.env[name],
+            [name]: envs[name],
         };
     }, {}); 
 };
@@ -52,11 +52,20 @@ module.exports.getEnv = async (name) => {
         return process.env[name];
     }
 
-    const params = {
-        Name: `${process.env.SSM_PREFIX}/${name}`,
-        WithDecryption: false,
-    };
-    const { Parameter } = await ssm.getParameter(params).promise();
+    // const params = {
+    //     Name: `${process.env.SSM_PREFIX}/${name}`,
+    //     WithDecryption: false,
+    // };
+    // const { Parameter } = await ssm.getParameter(params).promise();
 
-    return Parameter.Value;
+    // return Parameter.Value;
+
+    const envs = {
+        COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID,
+        COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID,
+        COGNITO_USER_POOL_NAME: process.env.COGNITO_USER_POOL_NAME,
+        FUNCTION_PREFIX: process.env.FUNCTION_PREFIX
+    };
+
+    return envs[name];
 };

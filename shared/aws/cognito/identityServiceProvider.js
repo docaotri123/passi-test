@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { getEnvs } = require('../ssm');
+const { getEnv } = require('../ssm');
 
 const cognitoIdentityServiceProvider = () => {
     return new AWS.CognitoIdentityServiceProvider({
@@ -9,7 +9,7 @@ const cognitoIdentityServiceProvider = () => {
 }
 
 const adminConfirmSignUp = async ({ username, metadata = {} }) => {
-    const UserPoolId = await getEnvs(['COGNITO_USER_POOL_ID']);
+    const UserPoolId = await getEnv('COGNITO_USER_POOL_ID');
     const params = {
         UserPoolId,
         Username: username,
@@ -22,29 +22,23 @@ const adminConfirmSignUp = async ({ username, metadata = {} }) => {
 };
 
 const signUp = async ({ username, password }) => {
-    try {
-        const ClientId = await getEnv('COGNITO_CLIENT_ID');
-        const params = {
-            ClientId,
-            Password: password,
-            Username: username,
-            UserAttributes: [
-                {
-                    Name: 'name',
-                    Value: 'tri',
-                },
-            ],
-        };
-        const user = await cognitoIdentityServiceProvider()
-            .signUp(params)
-            .promise();
+    const ClientId = await getEnv('COGNITO_CLIENT_ID');
+    const params = {
+        ClientId,
+        Password: password,
+        Username: username,
+        UserAttributes: [
+            {
+                Name: 'name',
+                Value: '',
+            },
+        ],
+    };
+    const user = await cognitoIdentityServiceProvider()
+        .signUp(params)
+        .promise();
 
-        return { data: user.UserSub };
-    } catch (error) {
-        console.log('signUp Error: ', error);
-
-        return { data: null };
-    }
+    return { data: user.UserSub };
 };
 
 const initiateAuth = async ({ username, password }) => {
@@ -79,8 +73,22 @@ const initiateAuth = async ({ username, password }) => {
     };
 };
 
+const adminUpdateUserAttributes = async ({ id, attributes = [] }) => {
+    const UserPoolId = await getEnv('COGNITO_USER_POOL_ID');
+    const params = {
+        UserAttributes: [...attributes],
+        UserPoolId /* required */,
+        Username: id /* required */,
+    };
+
+    return cognitoIdentityServiceProvider()
+        .adminUpdateUserAttributes(params)
+        .promise();
+};
+
 module.exports = {
+    adminUpdateUserAttributes,
     adminConfirmSignUp,
     signUp,
-    initiateAuth
+    initiateAuth,
 }
