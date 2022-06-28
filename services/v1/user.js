@@ -3,15 +3,15 @@ const { CognitoIdentityServiceProvider } = require('../../shared/aws/cognito');
 const { log } = require('../../utils/logging');
 const { invoke } = require('../../shared/aws/lambda');
 const constant = require('../../utils/constant');
-const userModel = require('../../models/user');
-const otpModel = require('../../models/otp');
+const UserModel = require('../../models/user');
+const OTPModel = require('../../models/otp');
 
 module.exports.signUp = async ({
     phone,
     password,
 }) => {
     const { OPT_TYPE } = constant;
-    const user = await userModel.findOne({ phone }).exec();
+    const user = await UserModel.findOne({ phone }).exec();
 
     if (user) {
         return AppError.UserPhoneExists();
@@ -21,7 +21,7 @@ module.exports.signUp = async ({
         username: phone,
         password,
     });
-    const userCreated = await userModel.create({
+    const userCreated = await UserModel.create({
         userId,
         phone
     })
@@ -37,7 +37,7 @@ module.exports.signUp = async ({
 module.exports.signIn = async ({ phone, password }) => {
     try {
         const [user, result] = await Promise.all([
-            userModel.findOne({ phone, isVerified: true }).exec(),
+            UserModel.findOne({ phone, isVerified: true }).exec(),
             CognitoIdentityServiceProvider.initiateAuth(
                 {
                     username: phone,
@@ -47,7 +47,7 @@ module.exports.signIn = async ({ phone, password }) => {
         ]);
         const { userId, fullName, firstName, lastName, isVerified, createdAt, avatar } = user;
 
-        await userModel.updateOne({ phone }, { lastLogin: Date.now() });
+        await UserModel.updateOne({ phone }, { lastLogin: Date.now() });
 
         return { result, user: { userId, fullName, firstName, lastName, phone, isVerified, createdAt, avatar }};
     } catch (error) {
@@ -71,7 +71,7 @@ module.exports.verifyAccount = async ({
     type
 }) => {
     const now = Date.now();
-    const otp = await otpModel.findOne({
+    const otp = await OTPModel.findOne({
         status: false, 
         expiredAt: { $gt: now },
         usageCount: { $gt: 0 },
@@ -88,7 +88,7 @@ module.exports.verifyAccount = async ({
     }
 
     if (otp.code !== code) {
-        await otpModel.updateOne({ _id: otp.id }, { $inc: { usageCount: -1 } });
+        await OTPModel.updateOne({ _id: otp.id }, { $inc: { usageCount: -1 } });
 
         return AppError.OtpIsWrong({ usageCount:  otp.usageCount - 1 });
     }
@@ -104,8 +104,8 @@ module.exports.verifyAccount = async ({
                 },
             ],
         }),
-       otpModel.updateOne({ _id: otp.id }, { status: true }),
-       userModel.updateOne({ phone }, { isVerified: true })
+       OTPModel.updateOne({ _id: otp.id }, { status: true }),
+       UserModel.updateOne({ phone }, { isVerified: true })
     ]);
 
     return { status: 'ok' };

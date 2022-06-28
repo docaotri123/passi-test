@@ -5,10 +5,6 @@ let dbConnection = null;
 module.exports.createConnection = async ({ endpoint, options = {} }) => {
     const isConnected = dbConnection && dbConnection.connection.readyState === 1;
 
-    if (isConnected && process.env.NODE_ENV === 'local') {
-        dbConnection = null;
-    }
-
     if (isConnected) {
         return dbConnection;
     }
