@@ -11,6 +11,7 @@ module.exports.triggerSendOTP = async (body) => {
     try {
         const { type } = body;
         const { OPT_TYPE } = constant;
+        log('triggerSendOTP');
 
         await createMongoConnection();
 
@@ -20,21 +21,23 @@ module.exports.triggerSendOTP = async (body) => {
                 const expiredAfterHour = momentUtils.addTime(now, 'h', OTP_SIGN_UP_EXPIRED);
                 const expiredAt = momentUtils.getFormat(expiredAfterHour, 'x');
                 // const otp = generateOTP(4);
-
-                return sendOTPWhenSignup({ ...body, type, expiredAt });
+                
+                await sendOTPWhenSignup({ ...body, type, expiredAt });
+                
+                break;
             }
             default:
                 break;
         }
     } catch (error) {
-        console.log('triggerSendOTP Error: ', error);
-        console.log('haha');
+        log('triggerSendOTP Error: ', error);
+        log('haha');
     } finally {
         await closeMongoConnection();
     }
 }
 
-const sendOTPWhenSignup = async ({ userId, phone, type, expiredAt, otp = '1111' }) => {
+const sendOTPWhenSignup = async ({ userId, phone, type, expiredAt, otp = '111111' }) => {
     // const params = {
     //     Message: `Tri Do code: ${otp}`,
     //     PhoneNumber: phone,

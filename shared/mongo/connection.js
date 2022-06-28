@@ -25,6 +25,7 @@ module.exports.createConnection = async ({ endpoint, options = {} }) => {
         ...options,
     });
 
+    console.log('connected DONE');
     return dbConnection;
 };
 
