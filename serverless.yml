@@ -14,13 +14,12 @@ provider:
     versionFunctions: false
     environment: ${self:custom.env}
     # role: ${self:custom.env.LAMBDA_ROLE_ARN}
-    vpc:
-        securityGroupIds:
-            - ${self:custom.env.SECURITY_GROUP_ID}
-        subnetIds:
-            - ${self:custom.env.SUBNET_ID_A}
-            - ${self:custom.env.SUBNET_ID_B}
-            - ${self:custom.env.SUBNET_ID_C}
+    # vpc:
+    #     securityGroupIds:
+    #         - ${self:custom.env.SECURITY_GROUP_ID}
+    #     subnetIds:
+    #         - ${self:custom.env.SUBNET_ID_A}
+    #         - ${self:custom.env.SUBNET_ID_B}
 
 custom:
     splitStacks:
