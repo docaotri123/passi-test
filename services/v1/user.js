@@ -6,10 +6,7 @@ const constant = require('../../utils/constant');
 const UserModel = require('../../models/user');
 const OTPModel = require('../../models/otp');
 
-module.exports.signUp = async ({
-    phone,
-    password,
-}) => {
+module.exports.signUp = async ({ phone, password }) => {
     const { OPT_TYPE } = constant;
     const user = await UserModel.findOne({ phone }).exec();
 
@@ -23,8 +20,8 @@ module.exports.signUp = async ({
     });
     const userCreated = await UserModel.create({
         userId,
-        phone
-    })
+        phone,
+    });
 
     await invoke({
         body: { userId, phone, type: OPT_TYPE.SIGN_UP },
@@ -32,24 +29,42 @@ module.exports.signUp = async ({
     });
 
     return userCreated._id;
-}
+};
 
 module.exports.signIn = async ({ phone, password }) => {
     try {
         const [user, result] = await Promise.all([
             UserModel.findOne({ phone, isVerified: true }).exec(),
-            CognitoIdentityServiceProvider.initiateAuth(
-                {
-                    username: phone,
-                    password,
-                }
-            )
+            CognitoIdentityServiceProvider.initiateAuth({
+                username: phone,
+                password,
+            }),
         ]);
-        const { userId, fullName, firstName, lastName, isVerified, createdAt, avatar } = user;
+        const {
+            userId,
+            fullName,
+            firstName,
+            lastName,
+            isVerified,
+            createdAt,
+            avatar,
+        } = user;
 
         await UserModel.updateOne({ phone }, { lastLogin: Date.now() });
 
-        return { result, user: { userId, fullName, firstName, lastName, phone, isVerified, createdAt, avatar }};
+        return {
+            result,
+            user: {
+                userId,
+                fullName,
+                firstName,
+                lastName,
+                phone,
+                isVerified,
+                createdAt,
+                avatar,
+            },
+        };
     } catch (error) {
         log(error);
 
@@ -65,18 +80,14 @@ module.exports.signIn = async ({ phone, password }) => {
     }
 };
 
-module.exports.verifyAccount = async ({
-    phone,
-    code,
-    type
-}) => {
+module.exports.verifyAccount = async ({ phone, code, type }) => {
     const now = Date.now();
     const otp = await OTPModel.findOne({
-        status: false, 
+        status: false,
         expiredAt: { $gt: now },
         usageCount: { $gt: 0 },
         type,
-        phone 
+        phone,
     }).exec();
 
     if (!otp) {
@@ -90,7 +101,7 @@ module.exports.verifyAccount = async ({
     if (otp.code !== code) {
         await OTPModel.updateOne({ _id: otp.id }, { $inc: { usageCount: -1 } });
 
-        return AppError.OtpIsWrong({ usageCount:  otp.usageCount - 1 });
+        return AppError.OtpIsWrong({ usageCount: otp.usageCount - 1 });
     }
 
     await Promise.all([
@@ -104,8 +115,8 @@ module.exports.verifyAccount = async ({
                 },
             ],
         }),
-       OTPModel.updateOne({ _id: otp.id }, { status: true }),
-       UserModel.updateOne({ phone }, { isVerified: true })
+        OTPModel.updateOne({ _id: otp.id }, { status: true }),
+        UserModel.updateOne({ phone }, { isVerified: true }),
     ]);
 
     return { status: 'ok' };

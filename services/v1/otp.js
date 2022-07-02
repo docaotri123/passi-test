@@ -20,12 +20,16 @@ module.exports.triggerSendOTP = async (body) => {
         switch (type) {
             case OPT_TYPE.SIGN_UP: {
                 const now = momentUtils.getMoment();
-                const expiredAfterHour = momentUtils.addTime(now, 'h', OTP_SIGN_UP_EXPIRED);
+                const expiredAfterHour = momentUtils.addTime(
+                    now,
+                    'h',
+                    OTP_SIGN_UP_EXPIRED
+                );
                 const expiredAt = momentUtils.getFormat(expiredAfterHour, 'x');
                 // const otp = generateOTP(4);
-                
+
                 await sendOTPWhenSignup({ ...body, type, expiredAt });
-                
+
                 break;
             }
             default:
@@ -37,7 +41,7 @@ module.exports.triggerSendOTP = async (body) => {
     } finally {
         await closeMongoConnection();
     }
-}
+};
 
 module.exports.resendOTP = async ({ phone, type }) => {
     const user = await UserModel.findOne({ phone }).exec();
@@ -51,39 +55,47 @@ module.exports.resendOTP = async ({ phone, type }) => {
         return AppError.UserNotFound();
     }
 
-    await OTPModel.updateMany({
-        status: false,
-        expiredAt: { $gt: now },
-        usageCount: { $gt: 0 },
-        type,
-        phone
-    },
+    await OTPModel.updateMany(
         {
-            status: true
-        });
+            status: false,
+            expiredAt: { $gt: now },
+            usageCount: { $gt: 0 },
+            type,
+            phone,
+        },
+        {
+            status: true,
+        }
+    );
 
     const otp = '111111';
-    
-    switch(type) {
+
+    switch (type) {
         case OPT_TYPE.SIGN_UP: {
             otpResult = await OTPModel.create({
                 userId: user.userId,
                 phone,
                 code: otp,
                 type,
-                expiredAt
+                expiredAt,
             });
 
             break;
-        } 
+        }
         default:
             break;
     }
 
     return otpResult._id;
-}
+};
 
-const sendOTPWhenSignup = async ({ userId, phone, type, expiredAt, otp = '111111' }) => {
+const sendOTPWhenSignup = async ({
+    userId,
+    phone,
+    type,
+    expiredAt,
+    otp = '111111',
+}) => {
     // const params = {
     //     Message: `Tri Do code: ${otp}`,
     //     PhoneNumber: phone,
@@ -94,8 +106,8 @@ const sendOTPWhenSignup = async ({ userId, phone, type, expiredAt, otp = '111111
         phone,
         code: otp,
         type,
-        expiredAt
+        expiredAt,
     });
 
     return otpResult._id;
-}
+};
