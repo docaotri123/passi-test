@@ -24,6 +24,6 @@ module.exports = {
     resendOTP: appWrapper({
         fn: otpFns.resendOTP,
         schema: OTPDtos.resendOTP,
-        useMongoConnection: true
+        useMongoConnection: true,
     }),
 };

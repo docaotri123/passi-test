@@ -1,13 +1,12 @@
 const AppError = require('../appError');
 const constant = require('../../utils/constant');
-const OTPModel = require('../../models/otp');
-const UserModel = require('../../models/user');
 const momentUtils = require('../../utils/moment');
-const { OTP_SIGN_UP_EXPIRED } = require('../../config');
+const { OTP_SIGN_UP_EXPIRED, NOREPLY_EMAIL } = require('../../config');
 // const { generateOTP } = require('../../utils/random');
 // const { sendMessage } = require('../../shared/aws/sns');
-const { createMongoConnection, closeMongoConnection } = require('../../models');
 const { log } = require('../../utils/logging');
+const { createConnection, closeConnection } = require('../../shared/prisma');
+// const { PrismaClient } = require('../../prisma/node_modules/.prisma/client');
 
 module.exports.triggerSendOTP = async (body) => {
     try {
@@ -44,49 +43,46 @@ module.exports.triggerSendOTP = async (body) => {
 };
 
 module.exports.resendOTP = async ({ phone, type }) => {
-    const user = await UserModel.findOne({ phone }).exec();
-    const now = momentUtils.getMoment();
-    const expiredAfterHour = momentUtils.addTime(now, 'h', OTP_SIGN_UP_EXPIRED);
-    const expiredAt = momentUtils.getFormat(expiredAfterHour, 'x');
-    const { OPT_TYPE } = constant;
-    let otpResult = null;
+    // const user = await UserModel.findOne({ phone }).exec();
+    // const now = momentUtils.getMoment();
+    // const expiredAfterHour = momentUtils.addTime(now, 'h', OTP_SIGN_UP_EXPIRED);
+    // const expiredAt = momentUtils.getFormat(expiredAfterHour, 'x');
+    // const { OPT_TYPE } = constant;
+    // let otpResult = null;
+    // if (!user) {
+    //     return AppError.UserNotFound();
+    // }
+    // await OTPModel.updateMany(
+    //     {
+    //         status: false,
+    //         expiredAt: { $gt: now },
+    //         usageCount: { $gt: 0 },
+    //         type,
+    //         phone,
+    //     },
+    //     {
+    //         status: true,
+    //     }
+    // );
+    // const otp = '111111';
+    // switch (type) {
+    //     case OPT_TYPE.SIGN_UP: {
+    //         otpResult = await OTPModel.create({
+    //             userId: user.userId,
+    //             phone,
+    //             code: otp,
+    //             type,
+    //             expiredAt,
+    //         });
+    //         break;
+    //     }
+    //     default:
+    //         break;
+    // }
+    // return otpResult._id;
 
-    if (!user) {
-        return AppError.UserNotFound();
-    }
-
-    await OTPModel.updateMany(
-        {
-            status: false,
-            expiredAt: { $gt: now },
-            usageCount: { $gt: 0 },
-            type,
-            phone,
-        },
-        {
-            status: true,
-        }
-    );
-
-    const otp = '111111';
-
-    switch (type) {
-        case OPT_TYPE.SIGN_UP: {
-            otpResult = await OTPModel.create({
-                userId: user.userId,
-                phone,
-                code: otp,
-                type,
-                expiredAt,
-            });
-
-            break;
-        }
-        default:
-            break;
-    }
-
-    return otpResult._id;
+    await testPrisma();
+    return { status: 'ok' };
 };
 
 const sendOTPWhenSignup = async ({
@@ -110,4 +106,32 @@ const sendOTPWhenSignup = async ({
     });
 
     return otpResult._id;
+};
+
+const testPrisma = async () => {
+    const prisma = createConnection();
+
+    await prisma.user.create({
+        data: {
+            name: 'Alice',
+            email: 'alice1@prisma.io',
+            posts: {
+                create: { title: 'Hello World' },
+            },
+            profile: {
+                create: { bio: 'I like turtles' },
+            },
+        },
+    });
+
+    const allUsers = await prisma.user.findMany({
+        include: {
+            posts: true,
+            profile: true,
+        },
+    });
+
+    console.dir(allUsers, { depth: null });
+
+    await closeConnection();
 };

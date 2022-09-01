@@ -7,10 +7,10 @@ module.exports = {
                 type: 'string',
                 isValidPhoneFormat: true,
             },
-            type: { type: 'string', enum: [OPT_TYPE.SIGN_UP] }
+            type: { type: 'string', enum: [OPT_TYPE.SIGN_UP] },
         },
-        required: ['phone', 'type'],
+        required: [],
         coerceTypes: true,
         additionalProperties: false,
     },
-}
+};
