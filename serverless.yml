@@ -39,9 +39,13 @@ custom:
         resultTtlInSeconds: 0
         identitySource: method.request.header.Authorization
 functions:
-    - ${file(resources/functions.yml)}
-    - ${file(resources/functions/user.yml)}
     - ${file(resources/functions/otp.yml)}
-    
 # resources:
 #     - ${file(resources/gateway.yml)}
+# only include the Prisma binary required on AWS Lambda while packaging
+package:
+    patterns:
+        - '!node_modules/.prisma/client/libquery_engine-*'
+        - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+        - '!node_modules/prisma/libquery_engine-*'
+        - '!node_modules/@prisma/engines/**'

@@ -1,11 +1,11 @@
-2triggerSendOTP:
-    handler: functions/v1/otp.triggerSendOTP
-    description: Send OTP
+# 2triggerSendOTP:
+#     handler: functions/v1/otp.triggerSendOTP
+#     description: Send OTP
 2resendOTP:
     handler: functions/v1/otp.resendOTP
     description: Resend OTP to user
     events:
         - http:
-            path: v1/user/resend-otp
-            method: post
-            cors: true
+              path: v1/user/resend-otp
+              method: post
+              cors: true

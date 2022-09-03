@@ -81,8 +81,8 @@ module.exports.resendOTP = async ({ phone, type }) => {
     // }
     // return otpResult._id;
 
-    await testPrisma();
-    return { status: 'ok' };
+    const result = await testPrisma();
+    return { data: result };
 };
 
 const sendOTPWhenSignup = async ({
@@ -109,29 +109,36 @@ const sendOTPWhenSignup = async ({
 };
 
 const testPrisma = async () => {
-    const prisma = createConnection();
+    try {
+        const prisma = createConnection();
+        const random = Math.floor(Math.random() * 10000);
 
-    await prisma.user.create({
-        data: {
-            name: 'Alice',
-            email: 'alice1@prisma.io',
-            posts: {
-                create: { title: 'Hello World' },
+        // await prisma.user.create({
+        //     data: {
+        //         name: 'Alice',
+        //         email: `alice${random}@prisma.io`,
+        //         posts: {
+        //             create: { title: 'Hello World' },
+        //         },
+        //         profile: {
+        //             create: { bio: 'I like turtles' },
+        //         },
+        //     },
+        // });
+
+        const allUsers = await prisma.user.findMany({
+            include: {
+                posts: true,
+                profile: true,
             },
-            profile: {
-                create: { bio: 'I like turtles' },
-            },
-        },
-    });
+        });
 
-    const allUsers = await prisma.user.findMany({
-        include: {
-            posts: true,
-            profile: true,
-        },
-    });
+        console.dir(allUsers, { depth: null });
 
-    console.dir(allUsers, { depth: null });
+        await closeConnection();
 
-    await closeConnection();
+        return allUsers;
+    } catch (err) {
+        console.log('err: ', err);
+    }
 };
