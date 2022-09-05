@@ -10,7 +10,7 @@
         "seed:create": "./bin/init_migration.sh",
         "seed:local": "node seeds stage=local",
         "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
-        "deploy:dev": "sls deploy --stage dev --aws-profile dctri-user-admin",
+        "deploy:dev:v3": "sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
         "prisma:generate": "npx prisma generate"
     },
     "author": "",
@@ -21,8 +21,7 @@
         "ajv-i18n": "^3.5.0",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.3",
-        "ramda": "^0.28.0",
-        "serverless-api-gateway-throttling": "^2.0.2"
+        "ramda": "^0.28.0"
     },
     "husky": {
         "hooks": {

@@ -1,17 +1,21 @@
 service: passii
-
+# Framework version constraint (semver constraint): '3', '^2.33'
+frameworkVersion: '3'
+	
+# Configuration validation: 'error' (fatal error), 'warn' (logged to the output) or 'off' (default: warn)
+# See https://www.serverless.com/framework/docs/configuration-validation
+configValidationMode: error
 plugins:
     - serverless-offline
-    - serverless-apigw-binary
-    - serverless-api-gateway-throttling
     - ./plugins/stacks/split-stacks.js
 
 provider:
     name: aws
     runtime: nodejs16.x
+    deploymentMethod: direct
     stage: ${opt:stage, 'dev'}
-    region: ${opt:region, 'ap-southeast-1'}
-    timeout: ${opt:timeout, 10}
+    region: ap-southeast-1
+    timeout: 10
     versionFunctions: false
     environment: ${self:custom.env}
     # role: ${self:custom.env.LAMBDA_ROLE_ARN}
@@ -34,14 +38,6 @@ custom:
     env: ${file(./serverless.${self:provider.stage}.env.yml)}
     stackName: ${opt:stackName, 'dev'}
     projectName: ${opt:projectName, 'passii'}
-    authorizer:
-        name: authorizer
-        type: request
-        resultTtlInSeconds: 0
-        identitySource: method.request.header.Authorization
-    apiGatewayThrottling:
-        maxRequestsPerSecond: 1000
-        maxConcurrentRequests: 500
 functions:
     - ${file(resources/functions/otp.yml)}
 # resources:
