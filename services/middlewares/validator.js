@@ -1,11 +1,9 @@
 const Ajv = require('ajv');
 const localize = require('ajv-i18n');
-const { Types } = require('mongoose');
 const moment = require('moment');
 const { log } = require('../../utils/logging');
 
 const AppError = require('../appError');
-
 const isValidTimeZone = (tz) => {
     if (!Intl || !Intl.DateTimeFormat().resolvedOptions().timeZone) {
         log('Time zones are not available in this environment');
@@ -78,9 +76,6 @@ const isValidPhoneFormat = (phone) => {
 
 const customValidator = () => {
     return {
-        objectId: {
-            validate: (schemaValue, data) => Types.ObjectId.isValid(data),
-        },
         isValidTimeZone: {
             validate: (schemaValue, data) => isValidTimeZone(data),
         },

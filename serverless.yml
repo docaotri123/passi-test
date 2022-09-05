@@ -3,6 +3,7 @@ service: passii
 plugins:
     - serverless-offline
     - serverless-apigw-binary
+    - serverless-api-gateway-throttling
     - ./plugins/stacks/split-stacks.js
 
 provider:
@@ -38,6 +39,9 @@ custom:
         type: request
         resultTtlInSeconds: 0
         identitySource: method.request.header.Authorization
+    apiGatewayThrottling:
+        maxRequestsPerSecond: 1000
+        maxConcurrentRequests: 500
 functions:
     - ${file(resources/functions/otp.yml)}
 # resources:

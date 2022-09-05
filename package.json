@@ -21,10 +21,8 @@
         "ajv-i18n": "^3.5.0",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.3",
-        "mongoose": "^6.3.8",
-        "mongoose-aggregate-paginate-v2": "^1.0.6",
-        "mongoose-paginate-v2": "^1.6.3",
-        "ramda": "^0.28.0"
+        "ramda": "^0.28.0",
+        "serverless-api-gateway-throttling": "^2.0.2"
     },
     "husky": {
         "hooks": {
