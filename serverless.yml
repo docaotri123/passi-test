@@ -3,6 +3,7 @@ service: passii
 plugins:
     - serverless-offline
     - serverless-apigw-binary
+    - serverless-layers
     - ./plugins/stacks/split-stacks.js
 
 provider:
@@ -13,6 +14,8 @@ provider:
     timeout: ${opt:timeout, 10}
     versionFunctions: false
     environment: ${self:custom.env}
+    deploymentBucket:
+        name: your-custom-deployment-bucket
     # role: ${self:custom.env.LAMBDA_ROLE_ARN}
     # vpc:
     #     securityGroupIds:
@@ -38,6 +41,8 @@ custom:
         type: request
         resultTtlInSeconds: 0
         identitySource: method.request.header.Authorization
+    serverless-layers:
+        dependenciesPath: ./package.json
 functions:
     - ${file(resources/functions/otp.yml)}
 # resources:

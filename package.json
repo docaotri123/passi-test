@@ -21,10 +21,8 @@
         "ajv-i18n": "^3.5.0",
         "js-yaml": "^4.1.0",
         "moment": "^2.29.3",
-        "mongoose": "^6.3.8",
-        "mongoose-aggregate-paginate-v2": "^1.0.6",
-        "mongoose-paginate-v2": "^1.6.3",
-        "ramda": "^0.28.0"
+        "ramda": "^0.28.0",
+        "throat": "^6.0.1"
     },
     "husky": {
         "hooks": {
@@ -49,7 +47,11 @@
         "prisma": "^4.3.0",
         "serverless-api-gateway-caching": "^1.8.1",
         "serverless-apigw-binary": "^0.4.4",
+        "serverless-layers": "^2.5.4",
         "serverless-offline": "^8.8.0",
         "serverless-provisioned-concurrency-autoscaling": "^1.9.1"
+    },
+    "volta": {
+        "node": "16.17.0"
     }
 }

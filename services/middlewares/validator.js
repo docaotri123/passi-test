@@ -1,6 +1,5 @@
 const Ajv = require('ajv');
 const localize = require('ajv-i18n');
-const { Types } = require('mongoose');
 const moment = require('moment');
 const { log } = require('../../utils/logging');
 
@@ -78,9 +77,6 @@ const isValidPhoneFormat = (phone) => {
 
 const customValidator = () => {
     return {
-        objectId: {
-            validate: (schemaValue, data) => Types.ObjectId.isValid(data),
-        },
         isValidTimeZone: {
             validate: (schemaValue, data) => isValidTimeZone(data),
         },
