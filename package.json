@@ -10,7 +10,7 @@
         "seed:create": "./bin/init_migration.sh",
         "seed:local": "node seeds stage=local",
         "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
-        "deploy:dev:v3": "sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
+        "deploy:dev:v3": "npm run prisma:generate && sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
         "prisma:generate": "npx prisma generate"
     },
     "author": "",
@@ -44,9 +44,6 @@
         "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.7.1",
         "prisma": "^4.3.0",
-        "serverless-api-gateway-caching": "^1.8.1",
-        "serverless-apigw-binary": "^0.4.4",
-        "serverless-offline": "^8.8.0",
-        "serverless-provisioned-concurrency-autoscaling": "^1.9.1"
+        "serverless-offline": "^8.8.0"
     }
 }

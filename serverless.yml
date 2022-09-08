@@ -44,8 +44,19 @@ functions:
 #     - ${file(resources/gateway.yml)}
 # only include the Prisma binary required on AWS Lambda while packaging
 package:
+    # excludeDevDependencies: false
     patterns:
         - '!node_modules/.prisma/client/libquery_engine-*'
         - 'node_modules/.prisma/client/libquery_engine-rhel-*'
         - '!node_modules/prisma/libquery_engine-*'
         - '!node_modules/@prisma/engines/**'
+        - '!.vscode/**'
+        - '!.github/**'
+        - '!bin'
+        - '!.env'
+        - '!.eslintrc.json'
+        - '!.gitignore'
+        - '!.prettierrc.json'
+        - '!LICENSE'
+        - '!README.md'
+        - '!package-lock.json'

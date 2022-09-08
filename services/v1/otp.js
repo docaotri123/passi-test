@@ -109,36 +109,15 @@ const sendOTPWhenSignup = async ({
 };
 
 const testPrisma = async () => {
-    try {
-        const prisma = createConnection();
-        const random = Math.floor(Math.random() * 10000);
+    const prisma = createConnection();
+    const allUsers = await prisma.user.findMany({
+        include: {
+            posts: true,
+            profile: true,
+        },
+    });
+    
+    await closeConnection();
 
-        // await prisma.user.create({
-        //     data: {
-        //         name: 'Alice',
-        //         email: `alice${random}@prisma.io`,
-        //         posts: {
-        //             create: { title: 'Hello World' },
-        //         },
-        //         profile: {
-        //             create: { bio: 'I like turtles' },
-        //         },
-        //     },
-        // });
-
-        const allUsers = await prisma.user.findMany({
-            include: {
-                posts: true,
-                profile: true,
-            },
-        });
-
-        console.dir(allUsers, { depth: null });
-
-        await closeConnection();
-
-        return allUsers;
-    } catch (err) {
-        console.log('err: ', err);
-    }
+    return allUsers;
 };
