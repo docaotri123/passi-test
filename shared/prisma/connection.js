@@ -6,7 +6,7 @@ module.exports.createConnection = () => {
 };
 
 module.exports.closeConnection = async () => {
-    if (prisma) {
-        return prisma.$disconnect();
-    }
+    // if (prisma) {
+    //     return prisma.$disconnect();
+    // }
 };
