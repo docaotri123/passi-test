@@ -1,33 +1,35 @@
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 generator client {
   provider = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String    @unique
+  title    String
+  body     String
+  comments Comment[]
+  author   User      @relation(fields: [authorId], references: [id])
+  authorId String    @db.ObjectId
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  user   User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+// Comments contain a comment string and connect back to the post.
+// postId must have @db.ObjectId to match up with Post's id type
+model Comment {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String @db.ObjectId
+  comment String
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  posts   Post[]
-  profile Profile?
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
+  name  String?
+  posts Post[]
 }

@@ -10,8 +10,8 @@
         "seed:create": "./bin/init_migration.sh",
         "seed:local": "node seeds stage=local",
         "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
-        "deploy:dev:v3": "npm run generate-client && sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
-        "generate-client": "npx prisma generate --data-proxy",
+        "deploy:dev:v3:mongodb": "npm run generate-client && sls deploy --stage dev3mongodb --aws-profile dctri-user-admin --verbose",
+        "generate-client": "npx prisma generate",
         "migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
     },
     "author": "",
