@@ -5,7 +5,7 @@
         "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
         "seed:local": "node seeds stage=local",
         "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
-        "deploy:dev:v3": "npm run generate-client && sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
+        "deploy:dev:v3": "sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
         "build": "tsc -p tsconfig.build.json",
         "prettier-format": "prettier --config .prettierrc .ts --write",
         "lint": "eslint . --ext .ts",
@@ -37,15 +37,13 @@
         "@typescript-eslint/eslint-plugin": "^5.38.0",
         "@typescript-eslint/parser": "^5.38.0",
         "aws-info": "^1.2.0",
+        "esbuild": "^0.15.8",
         "eslint": "^8.23.1",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.7.1",
         "serverless": "^3.22.0",
-        "serverless-bundle": "^5.5.0",
-        "serverless-offline": "^8.8.0",
-        "serverless-plugin-typescript": "^2.1.2",
-        "ts-node": "^10.9.1",
-        "typescript": "^4.8.3"
+        "serverless-esbuild": "^1.32.8",
+        "serverless-offline": "^8.8.0"
     }
 }

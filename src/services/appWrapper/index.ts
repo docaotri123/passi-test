@@ -1,3 +1,4 @@
+import { APIGatewayEvent, Context } from 'aws-lambda';
 import Response from '../../utils/response';
 import { beforeExecute } from './beforeExecute';
 import { captureHeaders } from './captureHeaders';
@@ -5,7 +6,7 @@ import { catchError } from './catchError';
 
 const appWrapper =
   ({ fn, schema }) =>
-  async (event, context, callback) => {
+  async (event: APIGatewayEvent, context: Context, callback) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     try {

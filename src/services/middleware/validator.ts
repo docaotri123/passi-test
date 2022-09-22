@@ -70,7 +70,8 @@ const validator = ({ schema, event, lang }) => {
       `${e.schemaPath} ${e.message}`.trim()
     );
 
-    throw AppError.GeneralInvalidParameters(details);
+    // throw AppError.GeneralInvalidParameters(details);
+    throw "";
   }
 
   return {

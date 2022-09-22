@@ -6,9 +6,9 @@ frameworkVersion: '3'
 # See https://www.serverless.com/framework/docs/configuration-validation
 configValidationMode: error
 plugins:
+    # - serverless-bundle
+    - serverless-esbuild
     - serverless-offline
-    - serverless-plugin-typescript
-    - serverless-bundle
     # - ./plugins/stacks/split-stacks.js
 
 provider:
@@ -40,8 +40,8 @@ custom:
     env: ${file(./serverless.${self:provider.stage}.env.yml)}
     stackName: ${opt:stackName, 'dev'}
     projectName: ${opt:projectName, 'passii'}
-    serverlessPluginTypescript:
-        tsConfigFileLocation: './tsconfig.build.json'
+    # bundle:
+    #     tsConfig: './tsconfig.build.json'
 functions:
     - ${file(resources/functions/otp.yml)}
 # resources:
@@ -49,7 +49,7 @@ functions:
 # only include the Prisma binary required on AWS Lambda while packaging
 package:
     # Create an optimized package for our functions 
-    individually: true
+    # individually: true
     patterns:
         - '!.vscode/**'
         - '!.github/**'

@@ -10,7 +10,7 @@ export default class OTPService {
             throw AppError.GeneralBadRequest();
         }
 
-        return requestData;
+        return { name: 'tri' };
     }
 
     /**

@@ -1,11 +1,20 @@
-import { Handler, Context } from 'aws-lambda';
+import {
+  Handler,
+  APIGatewayEvent,
+  Context,
+  APIGatewayProxyResult
+} from 'aws-lambda';
 import appWrapper from '../../services/appWrapper';
 import OTPService from '../../services/v1/otp';
 import * as otpDtos from '../../dtos/v1/otp';
 import { HttpStatus } from '../../services/appError';
 
 const otpFns = {
-  triggerSendOTP: async (event: any, context: Context, callback) => {
+  triggerSendOTP: async (
+    event: APIGatewayEvent,
+    context: Context,
+    callback
+  ) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     await OTPService.triggerSendOTP(event);
