@@ -1,5 +1,3 @@
 0authorizer:
     description: Authorizer
     handler: functions/v1/auth.authorizer
-0seed:
-    handler: functions/v1/seed.create

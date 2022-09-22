@@ -7,7 +7,8 @@ frameworkVersion: '3'
 configValidationMode: error
 plugins:
     - serverless-offline
-    - ./plugins/stacks/split-stacks.js
+    - serverless-plugin-typescript
+    # - ./plugins/stacks/split-stacks.js
 
 provider:
     name: aws
@@ -46,10 +47,6 @@ functions:
 package:
     # excludeDevDependencies: false
     patterns:
-        - '!node_modules/.prisma/client/libquery_engine-*'
-        - 'node_modules/.prisma/client/libquery_engine-rhel-*'
-        - '!node_modules/prisma/libquery_engine-*'
-        - '!node_modules/@prisma/engines/**'
         - '!.vscode/**'
         - '!.github/**'
         - '!bin'
