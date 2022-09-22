@@ -2,7 +2,7 @@
     "name": "passii",
     "version": "1.0.0",
     "scripts": {
-        "offline": "sls offline --stage local --httpPort 5000 --aws-profile dctri-user-admin",
+        "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
         "seed:local": "node seeds stage=local",
         "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
         "deploy:dev:v3": "npm run generate-client && sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose",
@@ -42,6 +42,7 @@
         "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.7.1",
         "serverless": "^3.22.0",
+        "serverless-bundle": "^5.5.0",
         "serverless-offline": "^8.8.0",
         "serverless-plugin-typescript": "^2.1.2",
         "ts-node": "^10.9.1",
