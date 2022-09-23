@@ -6,7 +6,7 @@ import { catchError } from './catchError';
 
 const appWrapper =
   ({ fn, schema }) =>
-  async (event: APIGatewayEvent, context: Context, callback) => {
+  async (event: APIGatewayEvent, context: Context) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     try {
@@ -23,13 +23,40 @@ const appWrapper =
         res
       });
 
-      callback(null, res.toJSON());
+      // callback(null, res.toJSON());
+      return res.toJSON();
     } catch (error) {
       const appError = catchError(error);
       const res = new Response(appError.toJSON());
 
-      callback(null, res.toJSON());
+      // callback(null, res.toJSON());
+      return res.toJSON();
     }
   };
 
-export default appWrapper;
+const triggerWrapper =
+  ({ fn }) =>
+  async (event: APIGatewayEvent, context: Context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+
+    try {
+      const res = new Response({});
+
+      await fn({
+        event,
+        context,
+        res
+      });
+
+      // callback(null, res.toJSON());
+      return res.toJSON();
+    } catch (error) {
+      const appError = catchError(error);
+      const res = new Response(appError.toJSON());
+
+      // callback(null, res.toJSON());
+      return res.toJSON();
+    }
+  };
+
+export { appWrapper, triggerWrapper };

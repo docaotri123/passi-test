@@ -1,22 +1,38 @@
-import { AppError } from'../appError';
+import { AppError } from '../appError';
+import { LambdaService } from '../../shared/aws/lambda'
 
 export default class OTPService {
-    /**
-     * resendOTP
-     */
-    public static resendOTP(requestData: any) {
+  private lambdaService: LambdaService;
 
-        if (requestData.test) {
-            throw AppError.GeneralBadRequest();
-        }
+  constructor () {
+    this.lambdaService = new LambdaService();
+  }
 
-        return { name: 'tri' };
+  /**
+   * resendOTP
+   */
+  public async resendOTP(requestData: any) {
+    if (requestData.test) {
+      throw AppError.GeneralBadRequest();
     }
 
-    /**
-     * resendOTP
-     */
-    public static triggerSendOTP(event: any) {
-        return event;
+    if (requestData.trigger) {
+      await this.lambdaService.invoke({
+        body: {
+            key: 'value',
+        },
+        functionName: `${process.env.FUNCTION_PREFIX}-triggerSendOTP`,
+    });
     }
+
+    return { name: 'tri do' };
+  }
+
+  /**
+   * resendOTP
+   */
+  public triggerSendOTP({ key }) {
+    console.log('triggerSendOTP: ', key);
+    return { message: 'ok' };
+  }
 }

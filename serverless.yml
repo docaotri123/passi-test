@@ -29,35 +29,38 @@ provider:
     #         - ${self:custom.env.SUBNET_ID_B}
 
 custom:
-    splitStacks:
-        perFeature: true
-        perFunction: false
-        perType: false
-        perGroupFunction: false
-    apigwBinary:
-        types:
-            - 'multipart/form-data'
+    # splitStacks:
+    #     perFeature: true
+    #     perFunction: false
+    #     perType: false
+    #     perGroupFunction: false
+    # apigwBinary:
+    #     types:
+    #         - 'multipart/form-data'
     env: ${file(./serverless.${self:provider.stage}.env.yml)}
     stackName: ${opt:stackName, 'dev'}
     projectName: ${opt:projectName, 'passii'}
-    # bundle:
-    #     tsConfig: './tsconfig.build.json'
+    esbuild:
+        keepOutputDirectory: true
+        watch:
+            pattern: ['src/**/*.ts'] # match only typescript files in src directory
+            ignore: ['test/**/*', '.serverless/**/*', '.vscode/**/*', '.github/**/*']
 functions:
     - ${file(resources/functions/otp.yml)}
 # resources:
 #     - ${file(resources/gateway.yml)}
 # only include the Prisma binary required on AWS Lambda while packaging
-package:
-    # Create an optimized package for our functions 
-    # individually: true
-    patterns:
-        - '!.vscode/**'
-        - '!.github/**'
-        - '!bin'
-        - '!.env'
-        - '!.eslintrc.json'
-        - '!.gitignore'
-        - '!.prettierrc.json'
-        - '!LICENSE'
-        - '!README.md'
-        - '!package-lock.json'
+# package:
+#     # Create an optimized package for our functions 
+#     # individually: true
+#     patterns:
+#         - '!.vscode/**'
+#         - '!.github/**'
+#         - '!bin'
+#         - '!.env'
+#         - '!.eslintrc.json'
+#         - '!.gitignore'
+#         - '!.prettierrc.json'
+#         - '!LICENSE'
+#         - '!README.md'
+#         - '!package-lock.json'

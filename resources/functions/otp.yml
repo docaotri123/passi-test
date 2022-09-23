@@ -1,5 +1,8 @@
-2test:
+resendOTP:
     handler: src/functions/v1/otp.resendOTP
     description: Resend OTP to user
     events:
       - httpApi: 'GET /v1/user/resend-otp'
+triggerSendOTP:
+    handler: src/functions/v1/otp.triggerSendOTP
+    description: triggerSendOTP

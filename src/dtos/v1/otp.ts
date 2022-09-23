@@ -8,7 +8,7 @@ const resendOTP = {
     type: { type: 'string', enum: [OPT_TYPE.SIGN_UP] }
   },
   required: [],
-  additionalProperties: false
+  additionalProperties: true
 };
 
 export { resendOTP };

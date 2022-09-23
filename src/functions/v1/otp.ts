@@ -1,35 +1,33 @@
 import {
   Handler,
-  APIGatewayEvent,
-  Context,
-  APIGatewayProxyResult
+  // APIGatewayEvent,
+  // Context,
 } from 'aws-lambda';
-import appWrapper from '../../services/appWrapper';
+import { appWrapper, triggerWrapper } from '../../services/appWrapper';
 import OTPService from '../../services/v1/otp';
 import * as otpDtos from '../../dtos/v1/otp';
-import { HttpStatus } from '../../services/appError';
+import { HttpStatus } from '../../services/appError'
+
+const otpService = new OTPService();
 
 const otpFns = {
-  triggerSendOTP: async (
-    event: APIGatewayEvent,
-    context: Context,
-    callback
-  ) => {
-    context.callbackWaitsForEmptyEventLoop = false;
+  triggerSendOTP: async ({ event, res }) => {
+    const data = await otpService.triggerSendOTP(event);
 
-    await OTPService.triggerSendOTP(event);
-
-    callback(null, { body: JSON.stringify({ message: 'ok' }) });
+    res.status(HttpStatus.Ok).data(data);
   },
   resendOTP: async ({ event, res }) => {
     const { requestData } = event;
-    const data = await OTPService.resendOTP(requestData);
+    const data = await otpService.resendOTP(requestData);
 
     res.status(HttpStatus.Created).data(data);
   }
 };
 
-const triggerSendOTP: Handler = otpFns.triggerSendOTP;
+const triggerSendOTP: Handler = triggerWrapper({
+  fn: otpFns.triggerSendOTP
+});
+
 const resendOTP: Handler = appWrapper({
   fn: otpFns.resendOTP,
   schema: otpDtos.resendOTP
