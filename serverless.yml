@@ -1,57 +1,60 @@
 service: passii
 # Framework version constraint (semver constraint): '3', '^2.33'
-frameworkVersion: '3'
-	
+frameworkVersion: "3"
+
 # Configuration validation: 'error' (fatal error), 'warn' (logged to the output) or 'off' (default: warn)
 # See https://www.serverless.com/framework/docs/configuration-validation
 configValidationMode: error
 plugins:
-    # - serverless-bundle
-    - serverless-esbuild
-    - serverless-offline
-    # - ./plugins/stacks/split-stacks.js
+  # - serverless-bundle
+  - serverless-esbuild
+  - serverless-offline
+  # - ./plugins/stacks/split-stacks.js
 
 provider:
-    name: aws
-    runtime: nodejs16.x
-    deploymentMethod: direct
-    stage: ${opt:stage, 'dev'}
-    region: ap-southeast-1
-    timeout: 10
-    versionFunctions: false
-    environment: ${self:custom.env}
-    # role: ${self:custom.env.LAMBDA_ROLE_ARN}
-    # vpc:
-    #     securityGroupIds:
-    #         - ${self:custom.env.SECURITY_GROUP_ID}
-    #     subnetIds:
-    #         - ${self:custom.env.SUBNET_ID_A}
-    #         - ${self:custom.env.SUBNET_ID_B}
+  name: aws
+  runtime: nodejs16.x
+  deploymentMethod: direct
+  stage: ${opt:stage, 'dev'}
+  region: ap-southeast-1
+  timeout: 10
+  versionFunctions: false
+  environment: ${self:custom.env}
+  # role: ${self:custom.env.LAMBDA_ROLE_ARN}
+  # vpc:
+  #     securityGroupIds:
+  #         - ${self:custom.env.SECURITY_GROUP_ID}
+  #     subnetIds:
+  #         - ${self:custom.env.SUBNET_ID_A}
+  #         - ${self:custom.env.SUBNET_ID_B}
 
 custom:
-    # splitStacks:
-    #     perFeature: true
-    #     perFunction: false
-    #     perType: false
-    #     perGroupFunction: false
-    # apigwBinary:
-    #     types:
-    #         - 'multipart/form-data'
-    env: ${file(./serverless.${self:provider.stage}.env.yml)}
-    stackName: ${opt:stackName, 'dev'}
-    projectName: ${opt:projectName, 'passii'}
-    esbuild:
-        keepOutputDirectory: true
-        watch:
-            pattern: ['src/**/*.ts'] # match only typescript files in src directory
-            ignore: ['test/**/*', '.serverless/**/*', '.vscode/**/*', '.github/**/*']
+  # splitStacks:
+  #     perFeature: true
+  #     perFunction: false
+  #     perType: false
+  #     perGroupFunction: false
+  # apigwBinary:
+  #     types:
+  #         - 'multipart/form-data'
+  env: ${file(./serverless.${self:provider.stage}.env.yml)}
+  stackName: ${opt:stackName, 'dev'}
+  projectName: ${opt:projectName, 'passii'}
+  esbuild:
+    minify: false
+    sourcemap: linked
+    keepNames: true
+    # keepOutputDirectory: true
+    # watch:
+    #   pattern: ["src/**/*.ts"] # match only typescript files in src directory
+    #   ignore: ["test/**/*", ".serverless/**/*", ".vscode/**/*", ".github/**/*"]
 functions:
-    - ${file(resources/functions/otp.yml)}
+  - ${file(resources/functions/otp.yml)}
 # resources:
 #     - ${file(resources/gateway.yml)}
 # only include the Prisma binary required on AWS Lambda while packaging
 # package:
-#     # Create an optimized package for our functions 
+#     # Create an optimized package for our functions
 #     # individually: true
 #     patterns:
 #         - '!.vscode/**'
