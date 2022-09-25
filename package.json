@@ -5,7 +5,7 @@
     "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
     "seed:local": "node seeds stage=local",
     "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
-    "deploy:dev:v3": "sls deploy --stage dev3 --aws-profile dctri-user-admin --verbose"
+    "deploy:dev:v1": "sls deploy --stage dev1 --aws-profile dctri-user-admin --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "@types/node": "^18.7.18",
     "aws-info": "^1.2.0",
     "esbuild": "^0.15.8",
+    "serverless": "^3.22.0",
     "serverless-esbuild": "^1.32.8",
     "serverless-offline": "^8.8.0",
     "typescript": "^4.8.3"
