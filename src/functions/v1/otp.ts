@@ -21,6 +21,12 @@ const otpFns = {
     const data = await otpService.resendOTP(requestData);
 
     res.status(HttpStatus.Created).data(data);
+  },
+  privateAPI: async ({ event, res }) => {
+    const { requestData } = event;
+    const data = otpService.privateAPI();
+
+    res.status(HttpStatus.Ok).data(data);
   }
 };
 
@@ -33,4 +39,9 @@ const resendOTP: Handler = appWrapper({
   schema: otpDtos.resendOTP
 });
 
-export { resendOTP, triggerSendOTP };
+const privateAPI: Handler = appWrapper({
+  fn: otpFns.privateAPI,
+  schema: null
+});
+
+export { resendOTP, triggerSendOTP, privateAPI };

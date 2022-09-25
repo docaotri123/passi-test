@@ -9,6 +9,13 @@ export default class OTPService {
   }
 
   /**
+   * privateAPI
+   */
+  public privateAPI() {
+    return { message: 'private API' }
+  }
+
+  /**
    * resendOTP
    */
   public async resendOTP(requestData: any) {

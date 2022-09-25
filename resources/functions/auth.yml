@@ -1,0 +1,3 @@
+authorizerFunc:
+    handler: src/functions/v1/auth.authorizerFunc
+    description: authorizer to restrict access to your HTTP API endpoints

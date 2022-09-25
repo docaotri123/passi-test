@@ -20,23 +20,13 @@ provider:
   timeout: 10
   versionFunctions: false
   environment: ${self:custom.env}
-  # role: ${self:custom.env.LAMBDA_ROLE_ARN}
-  # vpc:
-  #     securityGroupIds:
-  #         - ${self:custom.env.SECURITY_GROUP_ID}
-  #     subnetIds:
-  #         - ${self:custom.env.SUBNET_ID_A}
-  #         - ${self:custom.env.SUBNET_ID_B}
-
+  httpApi:
+    authorizers:
+      customAuthorizer:
+        type: request
+        functionName: authorizerFunc
+        # identitySource: method.request.header.Authorization
 custom:
-  # splitStacks:
-  #     perFeature: true
-  #     perFunction: false
-  #     perType: false
-  #     perGroupFunction: false
-  # apigwBinary:
-  #     types:
-  #         - 'multipart/form-data'
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
   projectName: ${opt:projectName, 'passii'}
@@ -44,26 +34,8 @@ custom:
     minify: false
     sourcemap: linked
     keepNames: true
-    # keepOutputDirectory: true
-    # watch:
-    #   pattern: ["src/**/*.ts"] # match only typescript files in src directory
-    #   ignore: ["test/**/*", ".serverless/**/*", ".vscode/**/*", ".github/**/*"]
+  # serverless-offline:
+  #   ignoreJWTSignature: true
 functions:
+  - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/otp.yml)}
-# resources:
-#     - ${file(resources/gateway.yml)}
-# only include the Prisma binary required on AWS Lambda while packaging
-# package:
-#     # Create an optimized package for our functions
-#     # individually: true
-#     patterns:
-#         - '!.vscode/**'
-#         - '!.github/**'
-#         - '!bin'
-#         - '!.env'
-#         - '!.eslintrc.json'
-#         - '!.gitignore'
-#         - '!.prettierrc.json'
-#         - '!LICENSE'
-#         - '!README.md'
-#         - '!package-lock.json'
