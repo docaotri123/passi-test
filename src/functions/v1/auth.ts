@@ -10,7 +10,6 @@ const authService = new AuthService();
 const otpFns = {
   authorizerFunc: async (event) => {
     const result = await authService.authorizerFunc(event);
-    console.log('authorizerFunc', result);
 
     return result;
   },
