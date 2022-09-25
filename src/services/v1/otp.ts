@@ -17,12 +17,17 @@ export default class OTPService {
     }
 
     if (requestData.trigger) {
-      await this.lambdaService.invoke({
+      console.time("time-triggerSendOTP");
+      const data = await this.lambdaService.invoke({
         body: {
-            key: 'value',
+          key: "value",
         },
         functionName: `${process.env.FUNCTION_PREFIX}-triggerSendOTP`,
-    });
+        invokeType: requestData.trigger
+      });
+      console.log('data invoke: ', data);
+      
+      console.timeEnd("time-triggerSendOTP");
     }
 
     return { name: 'tri do' };
@@ -32,7 +37,17 @@ export default class OTPService {
    * resendOTP
    */
   public triggerSendOTP({ key }) {
-    console.log('triggerSendOTP: ', key);
+    console.time('sleep');
+    this.sleep(5000);
+    console.timeEnd('sleep');
     return { message: 'ok' };
+  }
+
+  sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = 0;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
   }
 }

@@ -23,8 +23,8 @@ const appWrapper =
         res,
       });
 
-      callback(null, res.toJSON());
-      // return res.toJSON();
+      // callback(null, res.toJSON());
+      return res.toJSON();
     } catch (error) {
       const appError = catchError(error);
       const res = new Response(appError.toJSON());
@@ -36,9 +36,7 @@ const appWrapper =
 
 const triggerWrapper =
   ({ fn }) =>
-  async (event: APIGatewayEvent, context: Context, callback) => {
-    console.log("haha");
-
+  async (event: APIGatewayEvent, context: Context) => {
     context.callbackWaitsForEmptyEventLoop = false;
 
     try {
