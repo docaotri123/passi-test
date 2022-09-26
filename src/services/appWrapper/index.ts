@@ -6,11 +6,19 @@ import { catchError } from "./catchError";
 
 const appWrapper =
   ({ fn, schema }) =>
-  async (event: APIGatewayEvent, context: Context, callback) => {
+  async (event: APIGatewayEvent, context: Context) => {
     context.callbackWaitsForEmptyEventLoop = false;
-
     try {
       const res = new Response({});
+
+      if (event['source'] === 'serverless-warmup') {
+        console.log('WarmUP - Lambda is warm!')
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ message: 'ok' })
+        };
+      }  
+
       const { event: _event } = await beforeExecute({
         schema,
         event,
@@ -23,13 +31,11 @@ const appWrapper =
         res,
       });
 
-      // callback(null, res.toJSON());
       return res.toJSON();
     } catch (error) {
       const appError = catchError(error);
       const res = new Response(appError.toJSON());
 
-      // callback(null, res.toJSON());
       return res.toJSON();
     }
   };
@@ -38,9 +44,16 @@ const triggerWrapper =
   ({ fn }) =>
   async (event: APIGatewayEvent, context: Context) => {
     context.callbackWaitsForEmptyEventLoop = false;
-
     try {
       const res = new Response({});
+
+      if (event['source'] === 'serverless-warmup') {
+        console.log('WarmUP - Lambda is warm!')
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ message: 'ok' })
+        };
+      }
 
       await fn({
         event,
@@ -48,7 +61,6 @@ const triggerWrapper =
         res,
       });
 
-      // callback(null, res.toJSON());
       return res.toJSON();
     } catch (error) {
       console.log("err: ", error);
@@ -56,7 +68,6 @@ const triggerWrapper =
       const appError = catchError(error);
       const res = new Response(appError.toJSON());
 
-      // callback(null, res.toJSON());
       return res.toJSON();
     }
   };

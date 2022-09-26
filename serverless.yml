@@ -1,15 +1,9 @@
 service: passii
-# Framework version constraint (semver constraint): '3', '^2.33'
-# frameworkVersion: "1"
-
-# Configuration validation: 'error' (fatal error), 'warn' (logged to the output) or 'off' (default: warn)
-# See https://www.serverless.com/framework/docs/configuration-validation
 configValidationMode: error
+
 plugins:
-  # - serverless-bundle
   - serverless-esbuild
   - serverless-offline
-  # - ./plugins/stacks/split-stacks.js
 
 provider:
   name: aws
@@ -20,6 +14,9 @@ provider:
   timeout: 10
   versionFunctions: false
   environment: ${self:custom.env}
+  iam:
+    role: myDefaultRole
+
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
@@ -33,8 +30,12 @@ custom:
     type: request
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
-  # serverless-offline:
-  #   ignoreJWTSignature: true
+
 functions:
+  - ${file(resources/warm-up.yml)}
   - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/otp.yml)}
+
+resources:
+  - ${file(resources/sqs.yml)}
+  - ${file(resources/role.yml)}

@@ -1,10 +1,10 @@
-import * as AWS from 'aws-sdk'
+import { Lambda } from 'aws-sdk'
 
 export class LambdaService {
-  private lambda: AWS.Lambda;
+  private lambda: Lambda;
 
-  constructor () {
-    this.lambda = new AWS.Lambda({
+  constructor () {    
+    this.lambda = new Lambda({
       region: 'ap-southeast-1',
       endpoint: process.env.IS_OFFLINE ? 'http://localhost:3002' : undefined,
     });

@@ -1,3 +1,0 @@
-0authorizer:
-    description: Authorizer
-    handler: functions/v1/auth.authorizer

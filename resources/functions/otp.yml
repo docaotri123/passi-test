@@ -1,20 +1,33 @@
 resendOTP:
-    handler: src/functions/v1/otp.resendOTP
-    description: Resend OTP to user
-    events:
-      - http:
-          path: /v1/user/resend-otp
-          method: get
-          cors: true
+  handler: src/functions/v1/otp.resendOTP
+  description: Resend OTP to user
+  events:
+    - http:
+        path: /v1/user/resend-otp
+        method: get
+        cors: true
+
 triggerSendOTP:
-    handler: src/functions/v1/otp.triggerSendOTP
-    description: triggerSendOTP
+  handler: src/functions/v1/otp.triggerSendOTP
+  description: triggerSendOTP
+
 privateAPI:
-    handler: src/functions/v1/otp.privateAPI
-    description: privateAPI
-    events:
-      - http:
-          path: /v1/user/private
-          method: get
-          authorizer: ${self:custom.authorizer}
-          cors: true
+  handler: src/functions/v1/otp.privateAPI
+  description: privateAPI
+  events:
+    - http:
+        path: /v1/user/private
+        method: get
+        authorizer: '${self:custom.authorizer}'
+        cors: true
+
+sendOtpSQS:
+  description: sendOtpSQS
+  handler: src/functions/v1/otp.sendOtpSQS
+  events:
+    - sqs:
+        batchSize: 1
+        arn:
+          'Fn::GetAtt':
+            - SendOTPQueue
+            - Arn

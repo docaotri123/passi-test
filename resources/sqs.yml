@@ -1,0 +1,5 @@
+Resources:
+    SendOTPQueue:
+        Type: AWS::SQS::Queue
+        Properties:
+            QueueName: SendOTPQueue-${self:provider.stage}

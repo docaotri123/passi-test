@@ -1,0 +1,6 @@
+warmUpFunc:
+    description: 'your scheduled rate event to warmup functions'
+    handler: src/warmup/index.warmUpFunc
+    events:
+        - schedule:
+            rate: rate(10 minutes)
