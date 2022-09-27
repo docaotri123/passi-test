@@ -1,4 +1,5 @@
 service: passii
+frameworkVersion: '3'
 configValidationMode: error
 
 plugins:
@@ -12,10 +13,9 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ap-southeast-1
   timeout: 10
+  memorySize: 1024
   versionFunctions: false
   environment: ${self:custom.env}
-  iam:
-    role: myDefaultRole
 
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
@@ -38,4 +38,4 @@ functions:
 
 resources:
   - ${file(resources/sqs.yml)}
-  - ${file(resources/role.yml)}
+  # - ${file(resources/role.yml)}
