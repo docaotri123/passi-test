@@ -1,6 +1,7 @@
 import { AppError } from '../appError';
 import { LambdaService } from '../../shared/aws/lambda'
 import { SQSService } from '../../shared/aws/sqs'
+import { IResendOTP } from '../../interfaces/otp';
 
 export default class OTPService {
   private lambdaService: LambdaService;
@@ -21,26 +22,26 @@ export default class OTPService {
   /**
    * resendOTP
    */
-  public async resendOTP(requestData: any) {
-    if (requestData.test) {
+  public async resendOTP(requestData: IResendOTP) {
+    if (requestData['test']) {
       throw AppError.GeneralBadRequest();
     }
 
-    if (requestData.trigger) {
+    if (requestData['trigger']) {
       console.time("time-triggerSendOTP");
       const data = await this.lambdaService.invoke({
         body: {
           key: "value",
         },
         functionName: `${process.env.FUNCTION_PREFIX}-triggerSendOTP`,
-        invokeType: requestData.trigger
+        invokeType: requestData['trigger']
       });
       console.log('data invoke: ', data);
       
       console.timeEnd("time-triggerSendOTP");
     }
 
-    if (requestData.sqs) {
+    if (requestData['sqs']) {
       const messageAttributes = {
         type: {
           DataType: 'String',

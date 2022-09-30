@@ -4,7 +4,7 @@ resendOTP:
   events:
     - http:
         path: /v1/user/resend-otp
-        method: get
+        method: post
         cors: true
 
 triggerSendOTP:

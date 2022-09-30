@@ -1,10 +1,5 @@
 import { log } from '../../utils/logging';
-
-type ErrorObject = {
-    message: any,
-    details: Array<string>,
-    data: Array<any>
-}
+import { IErrorObject } from '../../interfaces/common';
 
 export class AppError extends Error {
     private error: any;
@@ -50,23 +45,21 @@ export class AppError extends Error {
             log(this.toString());
         }
 
-        const errorObj: ErrorObject = {
-            message: this.error,
-            details: [],
-            data: []
+        const errorObject: IErrorObject = {
+            message: this.error
         };
 
         if (this.details?.length) {
-            errorObj.details = this.details;
+            errorObject.details = this.details;
         }
 
         if (this.data) {
-            errorObj.data = this.data;
+            errorObject.data = this.data;
         }
 
         return {
             status: this.status,
-            error: errorObj,
+            error: errorObject,
         };
     }
 }

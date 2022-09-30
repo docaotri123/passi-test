@@ -3,7 +3,6 @@ import { AppError } from "../appError";
 export const catchError = (error) => {
   const { code, name } = error;
   const codeName = `${name}-${code}`;
-  console.log("errrr: ", error);
 
   switch (codeName) {
     case "MongoError-11000":

@@ -32,7 +32,7 @@ custom:
     identitySource: method.request.header.Authorization
 
 functions:
-  - ${file(resources/warm-up.yml)}
+  # - ${file(resources/warm-up.yml)}
   - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/otp.yml)}
 

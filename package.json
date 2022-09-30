@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.104",
     "@types/node": "^18.7.18",
+    "@types/ramda": "^0.28.15",
     "aws-info": "^1.2.0",
     "esbuild": "^0.15.8",
     "serverless": "^3.22.0",

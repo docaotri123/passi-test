@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import * as localize from 'ajv-i18n';
+import { eventRequest } from '../../types/common';
 import { AppError } from '../appError';
 
 const isYoutubeLink = (url: string) => {
@@ -17,17 +18,18 @@ const customValidator = () => {
   };
 };
 
-const addKeywords = (...ajvs) => {
+const addKeywords = (ajv: Ajv) => {
   const _validators = customValidator();
 
-  for (const [key, opts] of Object.entries(_validators)) {
-    for (const ajv of ajvs) {
-      ajv.addKeyword(key, opts);
-    }
+  for (const [keyword, opts] of Object.entries(_validators)) {
+    ajv.addKeyword({
+      keyword,
+      validate: opts.validate
+    });
   }
 };
 
-const validator = ({ schema, event, lang }) => {
+const validator = ({ schema, event, lang }): eventRequest => {
   const {
     pathParameters = {},
     queryStringParameters = {},
@@ -50,28 +52,26 @@ const validator = ({ schema, event, lang }) => {
 
   const { coerceTypes } = schema;
   // learn more in here: https://ajv.js.org/options.html
-  const ajv = new Ajv({ formats: {}, allErrors: true, $data: true });
-  const ajvCoerce = new Ajv({
+  const ajv = new Ajv({
     $data: true,
     formats: {},
     allErrors: true,
     useDefaults: true
   });
 
-  addKeywords(ajv, ajvCoerce);
+  addKeywords(ajv);
 
-  const _ajv = coerceTypes ? ajvCoerce : ajv;
+  const _ajv = ajv;
   const validate = _ajv.compile(schema);
   const valid = validate(data);
 
   if (!valid) {
     localize[lang](validate.errors);
     const details = validate?.errors?.map((e) =>
-      `${e.schemaPath} ${e.message}`.trim()
-    );
+      `${e.instancePath} ${e.message}`.trim()
+    ) || [];
 
-    // throw AppError.GeneralInvalidParameters(details);
-    throw "";
+    throw AppError.GeneralInvalidParameters(details);
   }
 
   return {

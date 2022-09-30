@@ -1,8 +1,9 @@
 import { path } from 'ramda'
 import validator from'../middleware/validator';
+import { eventRequest } from '../../types/common'
 
 export const beforeExecute = async ({ schema, event }) => {
-    let _event = null;
+    let _event: eventRequest;
     const lang = 'en'; // English
     const contentType = path<string>(['headers', 'Content-Type'], event);
 

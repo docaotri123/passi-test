@@ -1,12 +1,11 @@
 import {
-  Handler,
-  // APIGatewayEvent,
-  // Context,
-} from 'aws-lambda';
+  proxyHandler,
+  requestFunction
+} from '../../types/common';
 import { appWrapper, triggerWrapper } from '../../services/appWrapper';
 import OTPService from '../../services/v1/otp';
-import * as otpDtos from '../../dtos/v1/otp';
-import { HttpStatus } from '../../services/appError'
+import * as otpDTO from '../../dtos/v1/otp';
+import { HttpStatus } from '../../services/appError';
 
 const otpService = new OTPService();
 
@@ -16,7 +15,8 @@ const otpFns = {
 
     res.status(HttpStatus.Ok).data(data);
   },
-  resendOTP: async ({ event, res }) => {
+  resendOTP: async (requestFunction: requestFunction) => {
+    const { event, res } = requestFunction;
     const { requestData } = event;
     const data = await otpService.resendOTP(requestData);
 
@@ -35,21 +35,21 @@ const otpFns = {
   },
 };
 
-const triggerSendOTP: Handler = triggerWrapper({
+const triggerSendOTP: proxyHandler = triggerWrapper({
   fn: otpFns.triggerSendOTP
 });
 
-const resendOTP: Handler = appWrapper({
+const resendOTP: proxyHandler = appWrapper({
   fn: otpFns.resendOTP,
-  schema: otpDtos.resendOTP
+  schema: otpDTO.resendOTP
 });
 
-const privateAPI: Handler = appWrapper({
+const privateAPI: proxyHandler = appWrapper({
   fn: otpFns.privateAPI,
   schema: null
 });
 
-const sendOtpSQS: Handler = triggerWrapper({
+const sendOtpSQS: proxyHandler = triggerWrapper({
   fn: otpFns.sendOtpSQS
 });
 

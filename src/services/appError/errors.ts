@@ -10,11 +10,20 @@ const GeneralInternalServerError = (details: Array<string>, stack: string) => {
     );
 }
 
+const GeneralInvalidParameters = (details: Array<string>) => {
+    return new AppError(
+        'GeneralInvalidParameters',
+        HttpStatus.BadRequest,
+        details
+    );
+}
+
 const GeneralBadRequest = () => {
     return new AppError('GeneralBadRequest', HttpStatus.BadRequest);
 }
 
 export {
     GeneralInternalServerError,
-    GeneralBadRequest
+    GeneralBadRequest,
+    GeneralInvalidParameters
 };
