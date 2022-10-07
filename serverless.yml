@@ -21,10 +21,10 @@ custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
   projectName: ${opt:projectName, 'passii'}
-  esbuild:
-    minify: false
-    sourcemap: linked
-    keepNames: true
+  # esbuild:
+  #   minify: false
+  #   sourcemap: linked
+  #   keepNames: true
   authorizer:
     name: authorizer
     type: request
