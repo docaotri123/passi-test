@@ -1,0 +1,16 @@
+createInvoice:
+  handler: src/functions/v1/invoice.create
+  description: create invoice
+  events:
+    - http:
+        path: /v1/invoices
+        method: post
+        cors: true
+invoices:
+  handler: src/functions/v1/invoice.index
+  description: get invoices
+  events:
+    - http:
+        path: /v1/invoices
+        method: get
+        cors: true

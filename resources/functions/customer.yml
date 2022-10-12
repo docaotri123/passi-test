@@ -1,0 +1,8 @@
+customers:
+  handler: src/functions/v1/customer.index
+  description: Get customers
+  events:
+    - http:
+        path: /v1/customers
+        method: get
+        cors: true

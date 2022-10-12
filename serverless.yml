@@ -1,4 +1,4 @@
-service: passii
+service: ERP
 frameworkVersion: '3'
 configValidationMode: error
 
@@ -20,7 +20,7 @@ provider:
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
-  projectName: ${opt:projectName, 'passii'}
+  projectName: ERP
   # esbuild:
   #   minify: false
   #   sourcemap: linked
@@ -34,8 +34,10 @@ custom:
 functions:
   # - ${file(resources/warm-up.yml)}
   - ${file(resources/functions/auth.yml)}
-  - ${file(resources/functions/otp.yml)}
+  - ${file(resources/functions/customer.yml)}
+  - ${file(resources/functions/inventory.yml)}
+  - ${file(resources/functions/invoice.yml)}
 
-resources:
-  - ${file(resources/sqs.yml)}
+# resources:
+  # - ${file(resources/sqs.yml)}
   # - ${file(resources/role.yml)}

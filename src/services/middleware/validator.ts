@@ -29,7 +29,7 @@ const addKeywords = (ajv: Ajv) => {
   }
 };
 
-const validator = ({ schema, event, lang }): eventRequest => {
+const validator = ({ schema, event, lang, coerceTypes }): eventRequest => {
   const {
     pathParameters = {},
     queryStringParameters = {},
@@ -50,13 +50,13 @@ const validator = ({ schema, event, lang }): eventRequest => {
     };
   }
 
-  const { coerceTypes } = schema;
   // learn more in here: https://ajv.js.org/options.html
   const ajv = new Ajv({
     $data: true,
     formats: {},
     allErrors: true,
-    useDefaults: true
+    useDefaults: true,
+    coerceTypes
   });
 
   addKeywords(ajv);

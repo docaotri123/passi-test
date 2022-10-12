@@ -1,0 +1,8 @@
+supplierLookup:
+  handler: src/functions/v1/inventory.index
+  description: searching inventory for lookup
+  events:
+    - http:
+        path: /v1/inventory/lookup
+        method: get
+        cors: true

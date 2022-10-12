@@ -1,0 +1,328 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customers {
+  Customer_Number   String   @id @map("Customer Number")
+  Type_of_Customer  String?  @map("Type of Customer")
+  Salutation        String?
+  First_Name        String?  @map("First Name")
+  Middle_Initial    String?  @map("Middle Initial")
+  Last_Name         String?  @map("Last Name")
+  Company           String?
+  Street            String?
+  Street_Num        String?  @map("Street Num")
+  Street_Name       String?  @map("Street Name")
+  Suite             String?
+  City              String?
+  State             String?
+  Zip_Postal_Code   Int?     @map("Zip/Postal Code")
+  Country           String?
+  Phone             String?
+  Cell              String?
+  Fax               String?
+  Direction         String?
+  Key_Map           String?  @map("Key Map")
+  Tax_Exempt        Boolean? @map("Tax Exempt")
+  Tax_ID__          Float?   @map("Tax ID #")
+  Tax_Verify        Boolean? @map("Tax Verify")
+  Sales_Tax_Percent Float?   @map("Sales Tax Percent")
+  Credit_Limit      Float?   @map("Credit Limit")
+  Discount_Percent  Int?     @map("Discount Percent")
+  Comments          String?
+  Level             Int?
+  Region            String?
+  Term              String?
+  Salesman          String?
+  Payment_History   String?  @map("Payment History")
+  Email_Address     String?  @map("Email Address")
+  Creation_Time     String?  @map("Creation Time")
+  Text1             Int?
+  regionassign      String?
+  yellowpage        String?
+  salesmanassign    String?
+  ID                Int?
+  Type2             String?
+  WH_Instructions   String?  @map("WH Instructions")
+  InvoiceLabel      Boolean?
+  Date_Verification String?  @map("Date Verification")
+  Date_Scanned      String?  @map("Date Scanned")
+  DUP               Boolean?
+  Last_Transaction  String?  @map("Last Transaction")
+  Archive           Boolean?
+  CustID            Int?
+  PrivateNote       String?
+  PublicNote        String?
+}
+
+model Employee {
+  EmployeeID     Int     @id
+  Store          String?
+  Dept           String?
+  Employee       String?
+  Beeper         String?
+  Rate           Int?
+  Rate_04_01_12  String? @map("Rate 04/01/12")
+  Address        String?
+  City           String?
+  Zip            String?
+  Phone          String?
+  CELL_PHONE     String? @map("CELL PHONE")
+  Hire_Date      String? @map("Hire Date")
+  Discharge_Date String? @map("Discharge Date")
+}
+
+model Inventory {
+  Counter              String?
+  Item_Number          String  @id @map("Item Number")
+  Item_Number_2        String? @map("Item Number 2")
+  Partslink            String?
+  PTYPE                String?
+  Category             String?
+  First_Year           String? @map("First Year")
+  Last_Year            String? @map("Last Year")
+  Model_Year           String? @map("Model Year")
+  Sub_Category         String? @map("Sub Category")
+  Supplier_Number      String? @map("Supplier Number")
+  Description          String?
+  Description2         String?
+  CAPA                 String?
+  Section              String?
+  Manufacturer         String?
+  Model                String?
+  Location             String?
+  SWLoc                String?
+  Cubic_Feet           String? @map("Cubic Feet")
+  Part_Type            String? @map("Part Type")
+  OEM_Number           String? @map("OEM Number")
+  NEW_ID               String? @map("NEW ID")
+  Last_Inventory_Date  String? @map("Last Inventory Date")
+  Quantity_in_Stock    String? @map("Quantity in Stock")
+  QTY_DAMAGE           String? @map("QTY DAMAGE")
+  Quantity_in_SW       String? @map("Quantity in SW")
+  Cost                 String?
+  Retail               String?
+  Sales                String?
+  Level1               String?
+  Level2               String?
+  Level3               String?
+  Discount             String?
+  National             String?
+  AUTOFIT              String?
+  Certifit             String?
+  Special_Features     String? @map("Special Features")
+  Item_Picture         String? @map("Item Picture")
+  Reorder_Point        String? @map("Reorder Point")
+  Reorder_Quantity     String? @map("Reorder Quantity")
+  Quantity_On_Order    String? @map("Quantity On Order")
+  Last_Order_Date      String? @map("Last Order Date")
+  Amount_Ordered       String? @map("Amount Ordered")
+  Expected_Delivery    String? @map("Expected Delivery")
+  Supplier_Part_Number String? @map("Supplier Part Number")
+  Class                String?
+  Order                String?
+  Order_Priority       String? @map("Order Priority")
+  Enter_Date           String? @map("Enter Date")
+  Comments             String?
+  LINECODE             String?
+  Survey_Date          String? @map("Survey Date")
+  PriceFactor          String?
+  Shipping_Cost        String? @map("Shipping Cost")
+  PREFERRED            String?
+  S24M                 String?
+  S12M                 String?
+  S1M                  String?
+  S2M                  String?
+  S4M                  String?
+  SPM12                String?
+  SPM4                 String?
+  SPM4TO12             String?
+  SPM1TO4              String?
+  S12M_SW              String? @map("S12M SW")
+  S4M_SW               String? @map("S4M SW")
+  SPM4_SW              String? @map("SPM4 SW")
+  SBM                  String?
+  SPMB                 String?
+  TotalSupplyMos       String?
+  SPM12COMB            String?
+  QOnOrdr_SW           String? @map("QOnOrdr SW")
+  PermDis              String?
+  GrossMargin          String?
+  PreviousPrice        String?
+  Turn                 String?
+  TurnID_N             String? @map("TurnID N")
+  TurnID               String?
+  SWTurnID             String?
+  TurnM                String?
+  Old_TurnID           String? @map("Old TurnID")
+  COGS                 String?
+  INVENTORY_COUNT      String? @map("INVENTORY COUNT")
+  QTY_OLD              String? @map("QTY OLD")
+  LOC_NEW              String? @map("LOC NEW")
+  GROSS_MARGIN         String? @map("GROSS MARGIN")
+  CurMarketCOGS        String?
+  COGSOriginal         String?
+  COGSReduced          String?
+  LOW_GM               String? @map("LOW GM")
+  Override_PL          String? @map("Override PL")
+  Location2            String?
+  Capacity             String?
+  Location3            String?
+  DescriptionOld       String?
+  Location4            String?
+  LocClass             String?
+  PickSection          String?
+  PickSequence         String?
+  Depth                String?
+  LocSize              String?
+  Location5            String?
+  Location6            String?
+  Location7            String?
+  Location8            String?
+  PL_Issue             String? @map("PL Issue")
+  ItemClass            String?
+  ItemSubclass         String?
+  ItemNumberOld        String?
+  DPI                  String?
+  NewItem              String?
+  PURCLASS1            String?
+  PURCLASS2            String?
+  PURCLASS3            String?
+  Flag1                String?
+  Flag2                String?
+  Flag3                String?
+  Flag4                String?
+  PATENTED             String?
+  LostSales            String?
+  LastPriceUpdate      String?
+  LINECODE2            String?
+  SW_ETA               String? @map("SW ETA")
+  TimeStamp            String?
+  LastInventorySync    String?
+  LastQtyUpdate        String?
+}
+
+model Invoice {
+  Invoice_Number      Float    @id @map("Invoice Number")
+  Sold_to_Customer    String?  @map("Sold to Customer")
+  Ship_to_Customer    String?  @map("Ship to Customer")
+  Invoice_Date        String?  @map("Invoice Date")
+  Your_Order__        String?  @map("Your Order #")
+  Source_of_Order     String?  @map("Source of Order")
+  Payment_Terms       String?  @map("Payment Terms")
+  Salesman            String?
+  Salesman2           String?
+  Shipped_via         String?  @map("Shipped via")
+  Tax                 Float?
+  Freight             Float?
+  Discount            Float?
+  Paid                Boolean?
+  Comments            String?
+  Pulled_By           String?  @map("Pulled By")
+  Printed             Boolean?
+  VerifiedPulledParts Boolean?
+  ReturnCode          Int?
+  FollowUP            String?
+  FollowUp1           String?
+  FollowUp2           String?
+  Closed              Boolean?
+  STATUS              String?
+  Print_Time_Log      String?  @map("Print Time Log")
+  Type                String?
+  Cashier_Code        String?  @map("Cashier Code")
+  BACKORDER           Boolean?
+  Pulled_Time         String?  @map("Pulled Time")
+  Pulled_Begin        String?  @map("Pulled Begin")
+  Out_Time            String?  @map("Out Time")
+  Reconcile_Status    String?  @map("Reconcile Status")
+  Timestamp           String?
+  Tag1                Boolean?
+  Filled              Boolean?
+}
+
+model Invoice_Lineitems {
+  Invoice_Number    Float?   @map("Invoice Number")
+  Line_Number       Int      @id @map("Line Number")
+  Item_Number       String?  @map("Item Number")
+  Item_Number_2     String?  @map("Item Number 2")
+  Quantity          Int?
+  Model             String?
+  Year              String?
+  Description       String?
+  LIST              Int?
+  Sales             Int?
+  Price             Int?
+  Discount_YN       Boolean? @map("Discount YN")
+  Taxable           Boolean?
+  Shipped           Boolean?
+  Location          String?
+  Make              String?
+  QtyInStock        Int?
+  Cost              Float?
+  BackOrder         Boolean?
+  COGS              Float?
+  Gross_Margin      Float?   @map("Gross Margin")
+  GM_PERCENT        Float?   @map("GM PERCENT")
+  Extension         Float?
+  COGS_Extension    Float?   @map("COGS Extension")
+  Turn_ID           String?  @map("Turn ID")
+  Class             String?
+  Part_Type         String?  @map("Part Type")
+  Type              String?
+  Time_Printed      String?  @map("Time Printed")
+  Discount          Float?
+  Discontinued      Boolean?
+  Lot               String?
+  PulledBy          String?
+  DeliverQty        Int?
+  ReturnCode2       String?
+  ReturnCode        Int?
+  CustomerField1    String?
+  DeliveryNum       Int?
+  PickQty           Int?
+  Picked            Boolean?
+  PickedBy          String?
+  TimePicked        String?
+  PickStatus        Int?
+  Loaded            Boolean?
+  TimeLoaded        String?
+  Returned          Boolean?
+  RetPickedUpBy     String?
+  RetApprovedBy     String?
+  TimeReturned      String?
+  RetRequest        String?
+  RetAction         String?
+  RetID             Int?
+  RMA               Boolean?
+  CreditIssued      Boolean?
+  TimeCreditIssued  String?
+  TimeStamp         String?
+  BelowNormalMargin Boolean?
+
+  @@map("Invoice Lineitems")
+}
+
+model Payments {
+  Invoice_Number     String? @map("Invoice Number")
+  Line_Number        Int     @id @map("Line Number")
+  Date_Paid          String? @map("Date Paid")
+  How_Paid           String? @map("How Paid")
+  Credit_Card_Number Float?  @map("Credit Card Number")
+  Expiration_Date    String? @map("Expiration Date")
+  Authorization      String?
+  Amount_Paid        Int?    @map("Amount Paid")
+  Cashier            String?
+  TimeStamp          String?
+}
+
+model UserID {
+  UserID  String  @id
+  Pswd    Int?
+  Name    String?
+  Comment String?
+}
