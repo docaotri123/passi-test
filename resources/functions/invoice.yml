@@ -14,3 +14,11 @@ invoices:
         path: /v1/invoices
         method: get
         cors: true
+updateInvoice:
+  handler: src/functions/v1/invoice.update
+  description: update invoice
+  events:
+    - http:
+        path: /v1/invoices/{invoiceId}
+        method: put
+        cors: true

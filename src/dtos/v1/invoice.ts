@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { IInvoiceCreated, IInvoices } from '../../interfaces/invoice';
+import { IInvoiceCreated, IInvoices, IInvoiceUpdated } from '../../interfaces/invoice';
 
 const invoiceCreatedDTO: JSONSchemaType<IInvoiceCreated> = {
     type: 'object',
@@ -47,5 +47,30 @@ const invoicesDTO: JSONSchemaType<IInvoices> = {
     additionalProperties: false
 };
 
+const invoiceUpdatedDTO: JSONSchemaType<IInvoiceUpdated> = {
+    type: 'object',
+    properties: {
+        invoiceId: {
+            type: 'number'
+        },
+        inventories: {
+            type: 'array',
+            maxItems: 20,
+            items: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string'
+                    }
+                },
+                required: ['id'],
+                additionalProperties: false,
+            },
+            nullable: true
+        }
+    },
+    required: ['invoiceId'],
+    additionalProperties: false
+};
 
-export { invoiceCreatedDTO, invoicesDTO };
+export { invoiceCreatedDTO, invoicesDTO, invoiceUpdatedDTO };

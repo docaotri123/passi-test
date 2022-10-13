@@ -11,7 +11,17 @@ interface IInvoices {
     invoiceNumber?: number
 }
 
+interface IVInvoiceLineItem {
+    id: string
+}
+
+interface IInvoiceUpdated {
+    invoiceId: number,
+    inventories?: IVInvoiceLineItem[]
+}
+
 export {
     IInvoiceCreated,
-    IInvoices
+    IInvoices,
+    IInvoiceUpdated
 }

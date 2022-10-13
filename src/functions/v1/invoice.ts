@@ -5,7 +5,7 @@ import {
 import { appWrapper } from '../../services/appWrapper';
 import InvoiceService from '../../services/v1/invoice';
 import { HttpStatus } from '../../services/appError';
-import { invoiceCreatedDTO, invoicesDTO } from '../../dtos/v1/invoice';
+import { invoiceCreatedDTO, invoicesDTO, invoiceUpdatedDTO } from '../../dtos/v1/invoice';
 
 const invoiceService = new InvoiceService();
 
@@ -17,6 +17,13 @@ const invoiceFns = {
 
         res.status(HttpStatus.Created).data(data);
     },
+    update: async (requestFunction: requestFunction) => {
+        const { res, event } = requestFunction;
+        const { requestData } = event;
+        const data = await invoiceService.update(requestData);
+
+        res.status(HttpStatus.NoContent).data(data);
+    },
     index: async (requestFunction: requestFunction) => {
         const { res, event } = requestFunction;
         const data = await invoiceService.index(event.requestData);
@@ -27,5 +34,6 @@ const invoiceFns = {
 
 const create: proxyHandler = appWrapper({ fn: invoiceFns.create, schema: invoiceCreatedDTO });
 const index: proxyHandler = appWrapper({ fn: invoiceFns.index, schema: invoicesDTO });
+const update: proxyHandler = appWrapper({ fn: invoiceFns.update, schema: invoiceUpdatedDTO });
 
-export { create, index };
+export { create, index, update };

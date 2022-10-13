@@ -208,22 +208,22 @@ model Inventory {
 }
 
 model Invoice {
-  Invoice_Number      Float    @id @map("Invoice Number")
-  Sold_to_Customer    String?  @map("Sold to Customer")
-  Ship_to_Customer    String?  @map("Ship to Customer")
-  Invoice_Date        String?  @map("Invoice Date")
-  Your_Order__        String?  @map("Your Order #")
-  Source_of_Order     String?  @map("Source of Order")
-  Payment_Terms       String?  @map("Payment Terms")
+  Invoice_Number      Float               @id @map("Invoice Number")
+  Sold_to_Customer    String?             @map("Sold to Customer")
+  Ship_to_Customer    String?             @map("Ship to Customer")
+  Invoice_Date        String?             @map("Invoice Date")
+  Your_Order__        String?             @map("Your Order #")
+  Source_of_Order     String?             @map("Source of Order")
+  Payment_Terms       String?             @map("Payment Terms")
   Salesman            String?
   Salesman2           String?
-  Shipped_via         String?  @map("Shipped via")
+  Shipped_via         String?             @map("Shipped via")
   Tax                 Float?
   Freight             Float?
   Discount            Float?
   Paid                Boolean?
   Comments            String?
-  Pulled_By           String?  @map("Pulled By")
+  Pulled_By           String?             @map("Pulled By")
   Printed             Boolean?
   VerifiedPulledParts Boolean?
   ReturnCode          Int?
@@ -232,17 +232,18 @@ model Invoice {
   FollowUp2           String?
   Closed              Boolean?
   STATUS              String?
-  Print_Time_Log      String?  @map("Print Time Log")
+  Print_Time_Log      String?             @map("Print Time Log")
   Type                String?
-  Cashier_Code        String?  @map("Cashier Code")
+  Cashier_Code        String?             @map("Cashier Code")
   BACKORDER           Boolean?
-  Pulled_Time         String?  @map("Pulled Time")
-  Pulled_Begin        String?  @map("Pulled Begin")
-  Out_Time            String?  @map("Out Time")
-  Reconcile_Status    String?  @map("Reconcile Status")
+  Pulled_Time         String?             @map("Pulled Time")
+  Pulled_Begin        String?             @map("Pulled Begin")
+  Out_Time            String?             @map("Out Time")
+  Reconcile_Status    String?             @map("Reconcile Status")
   Timestamp           String?
   Tag1                Boolean?
   Filled              Boolean?
+  Invoice_Lineitems   Invoice_Lineitems[]
 }
 
 model Invoice_Lineitems {
@@ -303,6 +304,7 @@ model Invoice_Lineitems {
   TimeCreditIssued  String?
   TimeStamp         String?
   BelowNormalMargin Boolean?
+  Invoice           Invoice? @relation(fields: [Invoice_Number], references: [Invoice_Number], onDelete: NoAction, onUpdate: NoAction)
 
   @@map("Invoice Lineitems")
 }

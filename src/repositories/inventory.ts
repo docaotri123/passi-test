@@ -36,4 +36,12 @@ export default class InventoryRepository {
 
         return this.prisma.inventory.findMany(query);
     }
+
+    public getInventoriesByIds(ids: string[]) {
+        return this.prisma.inventory.findMany({
+            where: {
+                Item_Number: { in: ids},
+            }
+        })
+    }
 }

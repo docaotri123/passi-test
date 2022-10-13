@@ -21,6 +21,21 @@ export default class CustomerRepository {
         })
     }
 
+    public createInvoiceLineItems(invoiceId: number, lineItems: any[]) {
+        return this.prisma.invoice.update({
+            where: {
+                Invoice_Number: invoiceId
+            },
+            data: {
+                Invoice_Lineitems: {
+                    createMany: {
+                        data: lineItems
+                      },
+                }
+            }
+        })
+    }
+
     public getInvoicesCursor(pagination: IPaginationCursor) {
         const { take, skip, cursor, search } = pagination;
         const query = {
