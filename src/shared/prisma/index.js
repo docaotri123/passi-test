@@ -1,0 +1,1 @@
+module.exports = { createConnection, closeConnection } = require('./connection');

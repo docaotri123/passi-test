@@ -3,7 +3,6 @@ frameworkVersion: '3'
 configValidationMode: error
 
 plugins:
-  - serverless-esbuild
   - serverless-offline
 
 provider:
@@ -21,10 +20,6 @@ custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
   projectName: ERP
-  # esbuild:
-  #   minify: false
-  #   sourcemap: linked
-  #   keepNames: true
   authorizer:
     name: authorizer
     type: request
@@ -41,3 +36,9 @@ functions:
 # resources:
   # - ${file(resources/sqs.yml)}
   # - ${file(resources/role.yml)}
+package:
+  patterns:
+    - '!node_modules/.prisma/client/libquery_engine-*'
+    - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+    - '!node_modules/prisma/libquery_engine-*'
+    - '!node_modules/@prisma/engines/**'

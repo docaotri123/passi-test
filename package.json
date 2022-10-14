@@ -17,18 +17,10 @@
     "aws-sdk": "^2.1220.0",
     "ramda": "^0.28.0"
   },
-  "prisma": {
-    "schema": "src/prisma/schema.prisma"
-  },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.104",
-    "@types/node": "^18.7.18",
-    "@types/ramda": "^0.28.15",
     "aws-info": "^1.2.0",
-    "esbuild": "^0.15.8",
     "prisma": "^4.4.0",
     "serverless": "^3.22.0",
-    "serverless-esbuild": "^1.32.8",
     "serverless-offline": "^8.8.0"
   }
 }
