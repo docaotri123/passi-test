@@ -4,6 +4,8 @@ configValidationMode: error
 
 plugins:
   - serverless-offline
+  - serverless-webpack
+  - serverless-webpack-prisma
 
 provider:
   name: aws
@@ -19,7 +21,16 @@ provider:
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
-  projectName: ERP
+  projectName: 
+  # prisma:
+  #   installDeps: false
+  #   # prismaPath: prisma/schema.prisma
+  #   dataProxy: false
+  webpack:
+    includeModules: true
+    # packagerOptions:
+    #   scripts:
+    #      - prisma generate
   authorizer:
     name: authorizer
     type: request
@@ -28,10 +39,10 @@ custom:
 
 functions:
   # - ${file(resources/warm-up.yml)}
-  - ${file(resources/functions/auth.yml)}
+  # - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/customer.yml)}
-  - ${file(resources/functions/inventory.yml)}
-  - ${file(resources/functions/invoice.yml)}
+  # - ${file(resources/functions/inventory.yml)}
+  # - ${file(resources/functions/invoice.yml)}
 
 # resources:
   # - ${file(resources/sqs.yml)}

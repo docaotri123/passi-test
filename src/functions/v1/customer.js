@@ -9,6 +9,7 @@ const customerFns = {
   index: async (requestFunction) => {
     const { res, event } = requestFunction;
     const data = await customerService.index(event.requestData);
+    console.log('test');
 
     res.status(HttpStatus.Ok).data(data);
   }
