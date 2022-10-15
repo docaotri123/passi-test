@@ -4,8 +4,7 @@ configValidationMode: error
 
 plugins:
   - serverless-offline
-  - serverless-webpack
-  - serverless-webpack-prisma
+  - serverless-deployment-bucket
 
 provider:
   name: aws
@@ -17,25 +16,35 @@ provider:
   memorySize: 1024
   versionFunctions: false
   environment: ${self:custom.env}
-
+  deploymentBucket:
+    name: custom-deployment-bucket-erp-${self:provider.stage}
+    serverSideEncryption: AES256
+  layers:
+    - {Ref: CommonUtilsLambdaLayer}
+    
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
-  stackName: ${opt:stackName, 'dev'}
-  projectName: 
-  # prisma:
-  #   installDeps: false
-  #   # prismaPath: prisma/schema.prisma
-  #   dataProxy: false
-  webpack:
-    includeModules: true
-    # packagerOptions:
-    #   scripts:
-    #      - prisma generate
+  stackName: ${self:service}-${self:provider.stage}
   authorizer:
     name: authorizer
     type: request
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
+
+	
+layers:
+  commonUtils:
+    name: ${self:service}-${sls:stage}-node_modules
+    description: Description of what the lambda layer does
+    path: ./
+    compatibleRuntimes: nodejs16.x
+    package:
+        patterns:
+            - node_modules/**
+            - '!node_modules/.prisma/client/libquery_engine-*'
+            - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+            - '!node_modules/prisma/libquery_engine-*'
+            - '!node_modules/@prisma/engines/**'
 
 functions:
   # - ${file(resources/warm-up.yml)}
@@ -49,7 +58,4 @@ functions:
   # - ${file(resources/role.yml)}
 package:
   patterns:
-    - '!node_modules/.prisma/client/libquery_engine-*'
-    - 'node_modules/.prisma/client/libquery_engine-rhel-*'
-    - '!node_modules/prisma/libquery_engine-*'
-    - '!node_modules/@prisma/engines/**'
+    - '!node_modules/**'

@@ -6,23 +6,21 @@
     "seed:local": "node seeds stage=local",
     "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
     "pre:deploy:dev": "npx prisma generate --schema=.esbuild/.build/src/functions/v1/schema.prisma",
-    "deploy:dev": "sls deploy --stage dev --aws-profile dctri-user-admin --verbose"
+    "deploy:dev": "sls deploy --stage dev --aws-profile dctri-user-admin --verbose",
+    "remove:dev": "sls remove --stage dev --aws-profile dctri-user-admin --verbose"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.4.0",
     "ajv": "^8.11.0",
-    "ajv-i18n": "^4.2.0",S
+    "ajv-i18n": "^4.2.0",
     "ramda": "^0.28.0"
   },
   "devDependencies": {
     "aws-info": "^1.2.0",
     "serverless": "^3.23.0",
-    "serverless-offline": "^8.8.0",
-    "serverless-webpack": "^5.10.0",
-    "serverless-webpack-prisma": "^1.1.1",
-    "webpack": "^5.74.0",
-    "webpack-node-externals": "^3.0.0"
+    "serverless-deployment-bucket": "^1.6.0",
+    "serverless-offline": "^8.8.0"
   }
 }
