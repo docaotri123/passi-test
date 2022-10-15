@@ -21,6 +21,8 @@ provider:
     serverSideEncryption: AES256
   layers:
     - {Ref: CommonUtilsLambdaLayer}
+    - {Ref: PrismaClientLambdaLayer}
+    - {Ref: AwsSDKLambdaLayer}
     
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
@@ -34,24 +36,49 @@ custom:
 	
 layers:
   commonUtils:
-    name: ${self:service}-${sls:stage}-node_modules
-    description: Description of what the lambda layer does
+    name: ${self:service}-${sls:stage}-common-node_modules
+    description: common node_modules
     path: ./
     compatibleRuntimes: nodejs16.x
     package:
         patterns:
-            - node_modules/**
-            - '!node_modules/.prisma/client/libquery_engine-*'
-            - 'node_modules/.prisma/client/libquery_engine-rhel-*'
-            - '!node_modules/prisma/libquery_engine-*'
-            - '!node_modules/@prisma/engines/**'
+          - node_modules/**
+          - '!node_modules/.cache/**' 
+          - '!node_modules/aws-sdk/**'
+          - '!node_modules/.prisma/**'
+          - '!node_modules/prisma/**'
+          - '!node_modules/@prisma/**'
+  prismaClient:
+    name: ${self:service}-${sls:stage}-prisma-node_modules
+    description: prisma client
+    path: ./
+    compatibleRuntimes: nodejs16.x
+    package:
+        patterns:
+          - node_modules/.prisma/**
+          - node_modules/@prisma/**
+          - node_modules/prisma/**
+          - '!node_modules/prisma/query_engine-windows.*' # only running on server windows
+          - '!node_modules/.prisma/client/query_engine-windows.*' # only running on server windows
+          - '!node_modules/.prisma/client/libquery_engine-*'
+          - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+          - '!node_modules/prisma/libquery_engine-*'
+          - '!node_modules/@prisma/engines/**'
+  awsSDK:
+    name: ${self:service}-${sls:stage}-aws-sdk-node_modules
+    description: AWS SDK
+    path: ./
+    compatibleRuntimes: nodejs16.x
+    package:
+        patterns:
+          - node_modules/aws-sdk/**    
 
 functions:
   # - ${file(resources/warm-up.yml)}
-  # - ${file(resources/functions/auth.yml)}
+  - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/customer.yml)}
-  # - ${file(resources/functions/inventory.yml)}
-  # - ${file(resources/functions/invoice.yml)}
+  - ${file(resources/functions/inventory.yml)}
+  - ${file(resources/functions/invoice.yml)}
 
 # resources:
   # - ${file(resources/sqs.yml)}

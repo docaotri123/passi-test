@@ -15,6 +15,7 @@
     "@prisma/client": "^4.4.0",
     "ajv": "^8.11.0",
     "ajv-i18n": "^4.2.0",
+    "aws-sdk": "^2.1233.0",
     "ramda": "^0.28.0"
   },
   "devDependencies": {
