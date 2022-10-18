@@ -3,8 +3,9 @@ frameworkVersion: '3'
 configValidationMode: error
 
 plugins:
-  - serverless-esbuild
   - serverless-offline
+  - serverless-webpack
+  - serverless-webpack-prisma
 
 provider:
   name: aws
@@ -16,28 +17,56 @@ provider:
   memorySize: 1024
   versionFunctions: false
   environment: ${self:custom.env}
+  layers:
+    - {Ref: CommonUtilsLambdaLayer}
+    - {Ref: PrismaClientLambdaLayer}
 
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
   projectName: ERP
-  # esbuild:
-  #   minify: false
-  #   sourcemap: linked
-  #   keepNames: true
   authorizer:
     name: authorizer
     type: request
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
+  webpack:
+    includeModules: false
+
+layers:
+  commonUtils:
+    name: ${self:service}-${sls:stage}-common-node_modules
+    description: common node_modules
+    path: ./
+    compatibleRuntimes: nodejs16.x
+    package:
+        patterns:
+          - node_modules/**
+          - '!node_modules/.cache/**'
+          - '!node_modules/.prisma/**'
+          - '!node_modules/prisma/**'
+          - '!node_modules/@prisma/**'
+  prismaClient:
+    name: ${self:service}-${sls:stage}-prisma-node_modules
+    description: prisma client
+    path: ./
+    compatibleRuntimes: nodejs16.x
+    package:
+        patterns:
+          - node_modules/.prisma/**
+          - node_modules/@prisma/**
+          - node_modules/prisma/**
+          - '!node_modules/.cache/**'
+          - '!node_modules/prisma/query_engine-windows.*' # only running on server windows
+          - '!node_modules/.prisma/client/query_engine-windows.*' # only running on server windows
+          - '!node_modules/.prisma/client/libquery_engine-*'
+          - 'node_modules/.prisma/client/libquery_engine-rhel-*'
+          - '!node_modules/prisma/libquery_engine-*'
+          - '!node_modules/@prisma/engines/**'
 
 functions:
   # - ${file(resources/warm-up.yml)}
-  - ${file(resources/functions/auth.yml)}
+  # - ${file(resources/functions/auth.yml)}
   - ${file(resources/functions/customer.yml)}
-  - ${file(resources/functions/inventory.yml)}
-  - ${file(resources/functions/invoice.yml)}
-
-# resources:
-  # - ${file(resources/sqs.yml)}
-  # - ${file(resources/role.yml)}
+  # - ${file(resources/functions/inventory.yml)}
+  # - ${file(resources/functions/invoice.yml)}
