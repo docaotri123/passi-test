@@ -30,4 +30,36 @@ export class CognitoService {
             .signUp(params)
             .promise();
     };
+
+    public initiateAuth = async ({ username, password }) => {
+        const params = {
+            AuthFlow: 'USER_PASSWORD_AUTH',
+            ClientId: this.clientId,
+            AuthParameters: {
+                USERNAME: username,
+                PASSWORD: password,
+            },
+        };
+        const {
+            ChallengeName,
+            AuthenticationResult = {},
+            Session,
+            ChallengeParameters,
+        } = await this.cognitoIdentityServiceProvider.initiateAuth(params).promise();
+    
+        // if (ChallengeName === 'NEW_PASSWORD_REQUIRED') {
+        //     return {
+        //         changePassword: true,
+        //         session: Session,
+        //         email: JSON.parse(ChallengeParameters.userAttributes).email,
+        //     };
+        // }
+    
+        return {
+            accessToken: AuthenticationResult.AccessToken,
+            refreshToken: AuthenticationResult.RefreshToken,
+            expiresIn: AuthenticationResult.ExpiresIn,
+        };
+    };
+
   }

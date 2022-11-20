@@ -1,5 +1,5 @@
 // import { createConnection } from '../../shared/prisma';
-import { IUserRegister } from '../../interfaces/user';
+import { IAuthentication, IUserRegister } from '../../interfaces/user';
 import { CognitoService } from '../../shared/aws/cognito';
 
 export default class UserService {
@@ -16,5 +16,15 @@ export default class UserService {
         console.log(UserSub);
 
         return UserSub;
+    }
+
+    /**
+     * authentication
+     */
+    public async authentication(requestData: IAuthentication) {
+        const { email, password } = requestData;
+        const result = await this.cognitoService.initiateAuth({ username: email, password });
+
+        return { ...result };
     }
 }

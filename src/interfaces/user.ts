@@ -4,6 +4,11 @@ interface IUserRegister {
     firstName: string
 }
 
+interface IAuthentication {
+    email: string,
+    password: string,
+}
+
 export {
-    IUserRegister,
+    IUserRegister, IAuthentication
 }

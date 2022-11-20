@@ -6,3 +6,11 @@ userSignUp:
         path: /v1/users/sign-up
         method: post
         cors: true
+userAuthentication:
+  handler: src/functions/v1/user.authentication
+  description: user authentication
+  events:
+    - http:
+        path: /v1/users/authentication
+        method: post
+        cors: true
