@@ -4,9 +4,9 @@ configValidationMode: error
 
 plugins:
   - serverless-offline
+  - serverless-plugin-typescript
   # - serverless-webpack
   # - serverless-webpack-prisma
-  - serverless-esbuild # for local
 
 provider:
   name: aws
@@ -34,12 +34,6 @@ custom:
   # for production
   # webpack:
   #   includeModules: false
-  ## for local
-  esbuild:
-    minify: false
-    sourcemap: linked
-    keepNames: true
-  ##
 
 layers:
   commonUtils:

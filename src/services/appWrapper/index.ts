@@ -36,9 +36,8 @@ const appWrapper =
         return res.toJSON();
       } catch (error) {
         console.log('err: ', error);
-        
         const appError = catchError(error);
-        const res = new Response(appError.toJSON());
+        const res = new Response(appError);
 
         return res.toJSON();
       } finally {
@@ -72,7 +71,7 @@ const triggerWrapper =
         console.log("err: ", error);
 
         const appError = catchError(error);
-        const res = new Response(appError.toJSON());
+        const res = new Response(appError);
 
         return res.toJSON();
       } finally {
