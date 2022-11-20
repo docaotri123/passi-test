@@ -1,4 +1,4 @@
-import { Lambda } from 'aws-sdk'
+import * as Lambda from 'aws-sdk/clients/lambda'
 
 export class LambdaService {
   private lambda: Lambda;

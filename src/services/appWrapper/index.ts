@@ -35,6 +35,8 @@ const appWrapper =
 
         return res.toJSON();
       } catch (error) {
+        console.log('err: ', error);
+        
         const appError = catchError(error);
         const res = new Response(appError.toJSON());
 

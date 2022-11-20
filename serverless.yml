@@ -4,8 +4,9 @@ configValidationMode: error
 
 plugins:
   - serverless-offline
-  - serverless-webpack
-  - serverless-webpack-prisma
+  # - serverless-webpack
+  # - serverless-webpack-prisma
+  - serverless-esbuild # for local
 
 provider:
   name: aws
@@ -30,8 +31,15 @@ custom:
     type: request
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
-  webpack:
-    includeModules: false
+  # for production
+  # webpack:
+  #   includeModules: false
+  ## for local
+  esbuild:
+    minify: false
+    sourcemap: linked
+    keepNames: true
+  ##
 
 layers:
   commonUtils:
@@ -67,6 +75,6 @@ layers:
 functions:
   # - ${file(resources/warm-up.yml)}
   # - ${file(resources/functions/auth.yml)}
-  - ${file(resources/functions/customer.yml)}
+  - ${file(resources/functions/user.yml)}
   # - ${file(resources/functions/inventory.yml)}
   # - ${file(resources/functions/invoice.yml)}

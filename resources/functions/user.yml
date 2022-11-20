@@ -1,0 +1,8 @@
+userSignUp:
+  handler: src/functions/v1/user.signUp
+  description: user sign-up
+  events:
+    - http:
+        path: /v1/users/sign-up
+        method: post
+        cors: true

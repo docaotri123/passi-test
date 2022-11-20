@@ -1,4 +1,4 @@
-import { SQS } from 'aws-sdk'
+import * as SQS from 'aws-sdk/clients/sqs'
 
 export class SQSService {
     private sqs: SQS;

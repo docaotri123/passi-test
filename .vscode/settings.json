@@ -6,7 +6,10 @@
   },
   "cSpell.words": [
     "ajvs",
-    "dtos"
+    "cognitoidentity",
+    "cognitoidentityserviceprovider",
+    "dtos",
+    "esbuild"
   ],
   "[javascript]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
