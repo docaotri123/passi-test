@@ -14,3 +14,11 @@ userAuthentication:
         path: /v1/users/authentication
         method: post
         cors: true
+userConfirmSignUp:
+  handler: src/functions/v1/user.confirmSignUp
+  description: user confirm sign-up
+  events:
+    - http:
+        path: /v1/users/confirm-sign-up
+        method: post
+        cors: true
