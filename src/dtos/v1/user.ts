@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { IAuthentication, IUserRegister, IConfirmSignUp } from '../../interfaces/user';
+import { IAuthentication, IUserRegister, IConfirmSignUp } from '../../interface/user';
 
 const userRegister: JSONSchemaType<IUserRegister> = {
     type: 'object',

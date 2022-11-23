@@ -1,5 +1,5 @@
 import { prismaClient } from '../types/common'
-import { IUserRegister } from '../interfaces/user'
+import { IUserRegister } from '../interface/user'
 
 export default class UserRepository {
     private prisma: prismaClient;

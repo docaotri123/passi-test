@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { IInvoiceCreated, IInvoices, IInvoiceUpdated } from '../../interfaces/invoice';
+import { IInvoiceCreated, IInvoices, IInvoiceUpdated } from '../../interface/invoice';
 
 const invoiceCreatedDTO: JSONSchemaType<IInvoiceCreated> = {
     type: 'object',

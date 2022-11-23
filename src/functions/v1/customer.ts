@@ -2,9 +2,9 @@ import {
   proxyHandler,
   requestFunction
 } from '../../types/common';
-import { appWrapper } from '../../services/appWrapper';
-import CustomerService from '../../services/v1/customer';
-import { HttpStatus } from '../../services/appError';
+import { appWrapper } from '../../service/appWrapper';
+import CustomerService from '../../service/v1/customer';
+import { HttpStatus } from '../../service/appError';
 import { customersDTO } from '../../dtos/v1/customer'
 
 const customerService = new CustomerService();

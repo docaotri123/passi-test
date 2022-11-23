@@ -2,9 +2,9 @@ import {
     proxyHandler,
     requestFunction
 } from '../../types/common';
-import { appWrapper } from '../../services/appWrapper';
-import InventoryService from '../../services/v1/inventory';
-import { HttpStatus } from '../../services/appError';
+import { appWrapper } from '../../service/appWrapper';
+import InventoryService from '../../service/v1/inventory';
+import { HttpStatus } from '../../service/appError';
 import { inventoriesDTO } from '../../dtos/v1/inventory'
 
 const inventoryService = new InventoryService();

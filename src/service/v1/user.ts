@@ -1,8 +1,8 @@
 import { createConnection } from '../../shared/prisma';
-import { IAuthentication, IConfirmSignUp, IUserRegister } from '../../interfaces/user';
+import { IAuthentication, IConfirmSignUp, IUserRegister } from '../../interface/user';
 import { CognitoService } from '../../shared/aws/cognito';
-import RoleRepository from '../../repositories/role';
-import UserRepository from '../../repositories/user';
+import RoleRepository from '../../repository/role';
+import UserRepository from '../../repository/user';
 import { ROLE } from '../../utils/constant';
 
 export default class UserService {

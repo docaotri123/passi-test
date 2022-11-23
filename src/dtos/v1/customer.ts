@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { ICustomers } from '../../interfaces/customer';
+import { ICustomers } from '../../interface/customer';
 
 const customersDTO: JSONSchemaType<ICustomers> = {
   type: 'object',

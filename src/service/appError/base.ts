@@ -1,5 +1,5 @@
 import { log } from '../../utils/logging';
-import { IErrorObject } from '../../interfaces/common';
+import { IErrorObject } from '../../interface/common';
 
 export class AppError extends Error {
     private error: any;

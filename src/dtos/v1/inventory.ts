@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { IInventories } from '../../interfaces/inventory';
+import { IInventories } from '../../interface/inventory';
 
 const inventoriesDTO: JSONSchemaType<IInventories> = {
   type: 'object',

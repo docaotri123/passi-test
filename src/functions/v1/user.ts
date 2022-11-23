@@ -2,9 +2,9 @@ import {
     proxyHandler,
     requestFunction
 } from '../../types/common';
-import { appWrapper } from '../../services/appWrapper';
-import UserService from '../../services/v1/user';
-import { HttpStatus } from '../../services/appError';
+import { appWrapper } from '../../service/appWrapper';
+import UserService from '../../service/v1/user';
+import { HttpStatus } from '../../service/appError';
 import { userRegister, userAuthentication, userConfirmSignUp } from '../../dtos/v1/user';
 
 const userService = new UserService();

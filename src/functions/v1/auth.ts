@@ -3,8 +3,8 @@ import {
   // APIGatewayEvent,
   // Context,
 } from "aws-lambda";
-import { triggerWrapper } from '../../services/appWrapper';
-import AuthService from "../../services/v1/auth";
+import { triggerWrapper } from '../../service/appWrapper';
+import AuthService from "../../service/v1/auth";
 
 const authService = new AuthService();
 

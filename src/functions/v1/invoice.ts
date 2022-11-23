@@ -2,9 +2,9 @@ import {
     proxyHandler,
     requestFunction
 } from '../../types/common';
-import { appWrapper } from '../../services/appWrapper';
-import InvoiceService from '../../services/v1/invoice';
-import { HttpStatus } from '../../services/appError';
+import { appWrapper } from '../../service/appWrapper';
+import InvoiceService from '../../service/v1/invoice';
+import { HttpStatus } from '../../service/appError';
 import { invoiceCreatedDTO, invoicesDTO, invoiceUpdatedDTO } from '../../dtos/v1/invoice';
 
 const invoiceService = new InvoiceService();
