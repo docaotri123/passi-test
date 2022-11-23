@@ -40,3 +40,9 @@ model UserRoles {
 
   @@id([userId, roleId])
 }
+
+model Seed {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  filename  String   @unique
+  createdAt DateTime @default(now())
+}
