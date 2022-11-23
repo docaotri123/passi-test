@@ -25,7 +25,7 @@ export class CognitoService {
                 }
             ],
         };
-    
+
         return this.cognitoIdentityServiceProvider
             .signUp(params)
             .promise();
@@ -41,20 +41,9 @@ export class CognitoService {
             },
         };
         const {
-            ChallengeName,
             AuthenticationResult = {},
-            Session,
-            ChallengeParameters,
         } = await this.cognitoIdentityServiceProvider.initiateAuth(params).promise();
-    
-        // if (ChallengeName === 'NEW_PASSWORD_REQUIRED') {
-        //     return {
-        //         changePassword: true,
-        //         session: Session,
-        //         email: JSON.parse(ChallengeParameters.userAttributes).email,
-        //     };
-        // }
-    
+
         return {
             accessToken: AuthenticationResult.AccessToken,
             refreshToken: AuthenticationResult.RefreshToken,
@@ -62,4 +51,19 @@ export class CognitoService {
         };
     };
 
-  }
+    /**
+     * userConfirmSignUp
+     */
+    public userConfirmSignUp({ username, code }) {
+        const params = {
+            ClientId: this.clientId,
+            ConfirmationCode: code,
+            Username: username,
+        }
+
+        return this.cognitoIdentityServiceProvider
+            .confirmSignUp(params)
+            .promise();
+    }
+
+}

@@ -15,4 +15,4 @@ const closeConnection = async () => {
     }
 };
 
-export { createConnection, closeConnection }
+export { createConnection, closeConnection, PrismaClient }

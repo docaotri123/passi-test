@@ -1,1 +1,1 @@
-export { createConnection, closeConnection } from './connection';
+export { createConnection, closeConnection, PrismaClient } from './connection';

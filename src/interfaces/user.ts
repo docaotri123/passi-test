@@ -9,6 +9,11 @@ interface IAuthentication {
     password: string,
 }
 
+interface IConfirmSignUp {
+    email: string,
+    code: string
+}
+
 export {
-    IUserRegister, IAuthentication
+    IUserRegister, IAuthentication, IConfirmSignUp
 }
