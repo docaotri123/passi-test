@@ -37,13 +37,6 @@ const appWrapper =
       } catch (error) {
         console.log('err: ', error);
 
-        if (error.toJSON) {
-          const appError = catchError(error.toJSON());
-          const res = new Response(appError);
-
-          return res.toJSON();
-        }
-
         const appError = catchError(error);
         const res = new Response(appError);
 

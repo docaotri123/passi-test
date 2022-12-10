@@ -1,5 +1,4 @@
 import { prismaClient } from '../types/common'
-import { IUserRegister } from '../interface/user'
 
 export default class UserRepository {
     private prisma: prismaClient;
@@ -26,6 +25,17 @@ export default class UserRepository {
                         }
                     ]
                 }
+            }
+        })
+    }
+
+    /**
+     * findById
+     */
+    public findById(id: string) {
+        return this.prisma.user.findUnique({
+            where: {
+                id
             }
         })
     }

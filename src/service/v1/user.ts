@@ -1,9 +1,10 @@
 import { createConnection } from '../../shared/prisma';
-import { IAuthentication, IConfirmSignUp, IUserRegister } from '../../interface/user';
+import { IAuthentication, IConfirmSignUp, IUserDetails, IUserRegister } from '../../interface/user';
 import { CognitoService } from '../../shared/aws/cognito';
 import RoleRepository from '../../repository/role';
 import UserRepository from '../../repository/user';
 import { ROLE } from '../../utils/constant';
+import { AppError } from '../appError';
 
 export default class UserService {
     private cognitoService: CognitoService;
@@ -52,5 +53,16 @@ export default class UserService {
         await this.cognitoService.userConfirmSignUp({ username: email, code });
 
         return { status: 'ok' };
+    }
+
+    public async getUserDetails(requestData: IUserDetails) {
+        const { id } = requestData;
+        const user = await this.userRepository.findById(id);
+
+        if (!user) {
+            throw AppError.UserNotFound();
+        }
+
+        return user;
     }
 }

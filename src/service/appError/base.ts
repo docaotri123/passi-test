@@ -1,12 +1,13 @@
 import { log } from '../../utils/logging';
 import { IErrorObject } from '../../interface/common';
 
-export class AppError extends Error {
+export class AppError {
     private error: any;
     private status: any;
     private date: Date;
     private details: Array<string> | undefined;
     private data: Array<any>;
+    private stack: any;
     /**
      * @constructor
      * @param {Error} error
@@ -16,11 +17,11 @@ export class AppError extends Error {
      * @param {Array<any>} data option field
      */
     constructor(error: any, status: number, details?: Array<string>, stack?: string, data?: Array<any>) {
-        super();
+        // super();
 
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
-        }
+        // if (Error.captureStackTrace) {
+        //     Error.captureStackTrace(this, this.constructor);
+        // }
 
         this.error = error;
         this.status = status;
@@ -40,7 +41,7 @@ export class AppError extends Error {
         return `${this.stack} ${this.date}`;
     }
 
-    toJSON() {
+    public toJSON() {
         if (this.status >= 500) {
             log(this.toString());
         }

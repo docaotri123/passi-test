@@ -100,7 +100,7 @@ class Response {
       this._meta = {
         total: data.totalDocs
       };
-    } else if (data.meta) {
+    } else if (data && data.meta) {
       this._data = data.data;
       this._meta = data.meta;
     } else {

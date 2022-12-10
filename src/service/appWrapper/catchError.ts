@@ -8,7 +8,7 @@ export const catchError = (error) => {
     case "MongoError-11000":
       return AppError.GeneralInternalServerError([], "");
     default: {
-      if (error.toJSON) {
+      if (error) {
         return error;
       }
 

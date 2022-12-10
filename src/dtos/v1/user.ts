@@ -1,5 +1,5 @@
 import { JSONSchemaType } from 'ajv'
-import { IAuthentication, IUserRegister, IConfirmSignUp } from '../../interface/user';
+import { IAuthentication, IUserRegister, IConfirmSignUp, IUserDetails } from '../../interface/user';
 
 const userRegister: JSONSchemaType<IUserRegister> = {
     type: 'object',
@@ -53,4 +53,16 @@ const userConfirmSignUp: JSONSchemaType<IConfirmSignUp> = {
     additionalProperties: false
 };
 
-export { userRegister, userAuthentication, userConfirmSignUp };
+const userDetails: JSONSchemaType<IUserDetails> = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string',
+            minLength: 1
+        },
+    },
+    required: ['id'],
+    additionalProperties: false
+};
+
+export { userRegister, userAuthentication, userConfirmSignUp, userDetails };

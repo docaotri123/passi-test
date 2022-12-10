@@ -7,7 +7,7 @@ const GeneralInternalServerError = (details: Array<string>, stack: string) => {
         HttpStatus.InternalServerError,
         details,
         stack
-    );
+    ).toJSON();
 }
 
 const GeneralInvalidParameters = (details: Array<string>) => {
@@ -15,15 +15,20 @@ const GeneralInvalidParameters = (details: Array<string>) => {
         'GeneralInvalidParameters',
         HttpStatus.BadRequest,
         details
-    );
+    ).toJSON();
 }
 
 const GeneralBadRequest = () => {
-    return new AppError('GeneralBadRequest', HttpStatus.BadRequest);
+    return new AppError('GeneralBadRequest', HttpStatus.BadRequest).toJSON();
+}
+
+const UserNotFound = () => {
+    return new AppError('UserNotFound', HttpStatus.NotFound).toJSON();
 }
 
 export {
     GeneralInternalServerError,
     GeneralBadRequest,
-    GeneralInvalidParameters
+    GeneralInvalidParameters,
+    UserNotFound
 };

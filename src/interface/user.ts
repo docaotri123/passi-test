@@ -14,6 +14,10 @@ interface IConfirmSignUp {
     code: string
 }
 
+interface IUserDetails {
+    id: string
+}
+
 export {
-    IUserRegister, IAuthentication, IConfirmSignUp
+    IUserRegister, IAuthentication, IConfirmSignUp, IUserDetails
 }
