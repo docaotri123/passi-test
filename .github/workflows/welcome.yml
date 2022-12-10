@@ -1,13 +1,13 @@
-name: Post welcome comment
+name: MyLover Continuous Integration
 on:
-    pull_request:
-        types: [opened]
+    push:
+        branches: [money-lover]
 jobs:
     build:
         name: Post welcome comment
         runs-on: ubuntu-latest
         steps:
-            - run: gh pr comment $PR_URL --body "Welcome to the repository!"
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  PR_URL: ${{ github.event.pull_request.html_url }}
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 18

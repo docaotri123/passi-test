@@ -22,3 +22,11 @@ userConfirmSignUp:
         path: /v1/users/confirm-sign-up
         method: post
         cors: true
+userDetails:
+  handler: src/functions/v1/user.getUserDetails
+  description: use details
+  events:
+    - http:
+        path: /v1/users/{id}
+        method: get
+        cors: true

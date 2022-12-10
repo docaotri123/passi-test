@@ -5,7 +5,7 @@ import {
 import { appWrapper } from '../../service/appWrapper';
 import UserService from '../../service/v1/user';
 import { HttpStatus } from '../../service/appError';
-import { userRegister, userAuthentication, userConfirmSignUp } from '../../dtos/v1/user';
+import { userRegister, userAuthentication, userConfirmSignUp, userDetails } from '../../dtos/v1/user';
 
 const userService = new UserService();
 
@@ -30,11 +30,19 @@ const userFns = {
         const data = await userService.confirmSignUp(requestData);
 
         res.status(HttpStatus.NoContent).data(data);
+    },
+    getUserDetails: async (requestFunction: requestFunction) => {
+        const { res, event } = requestFunction;
+        const { requestData } = event;
+        const data = await userService.getUserDetails(requestData);
+
+        res.status(HttpStatus.Ok).data(data);
     }
 };
 
 const signUp: proxyHandler = appWrapper({ fn: userFns.signUp, schema: userRegister });
 const authentication: proxyHandler = appWrapper({ fn: userFns.authentication, schema: userAuthentication });
 const confirmSignUp: proxyHandler = appWrapper({ fn: userFns.confirmSignUp, schema: userConfirmSignUp });
+const getUserDetails: proxyHandler = appWrapper({ fn: userFns.getUserDetails, schema: userDetails });
 
-export { signUp, authentication, confirmSignUp };
+export { signUp, authentication, confirmSignUp, getUserDetails };

@@ -1,4 +1,3 @@
-import { AppError } from "../appError";
 import { IAMService } from "../../shared/aws/iam";
 
 export default class AuthService {
