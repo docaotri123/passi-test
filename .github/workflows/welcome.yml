@@ -1,7 +1,7 @@
 name: MyLover Continuous Integration
 on:
     push:
-        branches: [ money-lover ]
+        branches: [money-lover]
 jobs:
     build:
         name: Post welcome comment
@@ -9,5 +9,5 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
-                with:
-                node-version: 18
+              with:
+                  node-version: 18
