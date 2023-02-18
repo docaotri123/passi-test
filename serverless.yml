@@ -1,12 +1,12 @@
-service: ERP
+service: MONEYLOVER
 frameworkVersion: '3'
 configValidationMode: error
 
 plugins:
   - serverless-offline
   - serverless-plugin-typescript
-  # - serverless-webpack
-  # - serverless-webpack-prisma
+  - serverless-webpack
+  - serverless-webpack-prisma
 
 provider:
   name: aws
@@ -32,8 +32,8 @@ custom:
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
   # for production
-  # webpack:
-  #   includeModules: false
+  webpack:
+    includeModules: false
 
 layers:
   commonUtils:
