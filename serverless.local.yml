@@ -1,12 +1,12 @@
-service: MONEY
+service: MONEYLOVER
 frameworkVersion: '3'
 configValidationMode: error
 
 plugins:
   - serverless-offline
-  # - serverless-plugin-typescript
-  - serverless-webpack
-  - serverless-webpack-prisma
+  - serverless-plugin-typescript
+  # - serverless-webpack
+  # - serverless-webpack-prisma
 
 provider:
   name: aws
@@ -22,10 +22,6 @@ provider:
     - {Ref: CommonUtilsLambdaLayer}
     - {Ref: PrismaClientLambdaLayer}
 
-# package:
-#   patterns:
-#     - '!node_modules/**'
-
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}
   stackName: ${opt:stackName, 'dev'}
@@ -36,8 +32,8 @@ custom:
     resultTtlInSeconds: 0
     identitySource: method.request.header.Authorization
   # for production
-  webpack:
-    includeModules: false
+  # webpack:
+  #   includeModules: false
 
 layers:
   commonUtils:
@@ -52,11 +48,6 @@ layers:
           - '!node_modules/.prisma/**'
           - '!node_modules/prisma/**'
           - '!node_modules/@prisma/**'
-          - '!.build/**'
-          - '!.vscode/**'
-          - '!.github/**'
-          - '!.vscode/**'
-          - '!.webpack/**'
   prismaClient:
     name: ${self:service}-${sls:stage}-prisma-node_modules
     description: prisma client
@@ -74,11 +65,6 @@ layers:
           - 'node_modules/.prisma/client/libquery_engine-rhel-*'
           - '!node_modules/prisma/libquery_engine-*'
           - '!node_modules/@prisma/engines/**'
-          - '!.build/**'
-          - '!.vscode/**'
-          - '!.github/**'
-          - '!.vscode/**'
-          - '!.webpack/**'
 
 functions:
   # - ${file(resources/warm-up.yml)}
