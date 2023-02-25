@@ -23,20 +23,20 @@ jobs:
       - name: Install package
         run: npm install
 
-      - name: Prisma generate client
-        run: npx prisma generate
-
-    #   - name: Prisma generate client
-    #     run: npx prisma migrate deploy
-
       - name: Deploy Serverless service
         run: |
           if [ "${GITHUB_REF#refs/heads/}" = "money-lover" ]; then
             npm run deploy:dev
           fi
-        
-    #   - name: Seed data
-    #     run: |
-    #       if [ "${GITHUB_REF#refs/heads/}" = "money-lover" ]; then
-    #         npm run seed:dev
-    #       fi
+
+      - name: Run migrations
+        run: |
+          if [ "${GITHUB_REF#refs/heads/}" = "money-lover" ]; then
+            npm run migration:dev
+          fi
+
+      - name: Seed data
+        run: |
+          if [ "${GITHUB_REF#refs/heads/}" = "money-lover" ]; then
+            npm run seed:dev
+          fi

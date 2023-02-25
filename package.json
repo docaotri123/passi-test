@@ -5,6 +5,8 @@
     "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
     "seed:local": "ts-node seeds stage=local",
     "seed:dev": "sls invoke -f seed --stage dev --aws-profile dctri-user-admin",
+    "migration:local": "ts-node run_migration_files stage=local",
+    "migration:dev": "ts-node run_migration_files stage=dev",
     "deploy:test": "sls deploy --stage dev --aws-profile dctri-user-admin --verbose",
     "deploy:dev": "sls deploy --stage dev --verbose"
   },
@@ -15,6 +17,7 @@
     "ajv": "^8.11.0",
     "ajv-i18n": "^4.2.0",
     "aws-sdk": "^2.1220.0",
+    "child_process": "^1.0.2",
     "js-yaml": "^4.1.0",
     "ramda": "^0.28.0"
   },
