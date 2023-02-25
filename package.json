@@ -1,6 +1,6 @@
 {
   "name": "money-lover-tri",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
     "seed:local": "ts-node seeds stage=local",
