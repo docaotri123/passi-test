@@ -4,9 +4,9 @@ configValidationMode: error
 
 plugins:
   - serverless-offline
-  # - serverless-plugin-typescript
   - serverless-webpack
   - serverless-webpack-prisma
+  - serverless-deployment-bucket
 
 provider:
   name: aws
@@ -18,13 +18,12 @@ provider:
   memorySize: 1024
   versionFunctions: false
   environment: ${self:custom.env}
+  deploymentBucket:
+    name: money-${sls:stage}-deployment-bucket
+    serverSideEncryption: AES256
   layers:
     - {Ref: CommonUtilsLambdaLayer}
     - {Ref: PrismaClientLambdaLayer}
-
-# package:
-#   patterns:
-#     - '!node_modules/**'
 
 custom:
   env: ${file(./serverless.${self:provider.stage}.env.yml)}

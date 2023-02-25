@@ -7,6 +7,7 @@ plugins:
   - serverless-plugin-typescript
   # - serverless-webpack
   # - serverless-webpack-prisma
+  - serverless-deployment-bucket
 
 provider:
   name: aws
@@ -18,6 +19,9 @@ provider:
   memorySize: 1024
   versionFunctions: false
   environment: ${self:custom.env}
+  deploymentBucket:
+    name: ${self:service}-${sls:stage}-deployment-bucket
+    serverSideEncryption: AES256
   layers:
     - {Ref: CommonUtilsLambdaLayer}
     - {Ref: PrismaClientLambdaLayer}
