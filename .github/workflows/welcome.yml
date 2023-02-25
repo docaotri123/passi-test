@@ -32,7 +32,7 @@ jobs:
       - name: Deploy Serverless service
         run: |
           if [ "${GITHUB_REF#refs/heads/}" = "money-lover" ]; then
-            sls deploy --stage dev --verbose
+            serverless deploy --stage dev --verbose
           fi
         
     #   - name: Seed data
