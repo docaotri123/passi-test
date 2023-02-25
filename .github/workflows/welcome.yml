@@ -26,8 +26,8 @@ jobs:
       - name: Prisma generate client
         run: npx prisma generate
 
-      - name: Prisma generate client
-        run: npx prisma migrate deploy
+    #   - name: Prisma generate client
+    #     run: npx prisma migrate deploy
 
       - name: Deploy Serverless service
         run: |
