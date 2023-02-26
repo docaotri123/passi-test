@@ -1,22 +1,15 @@
-const path = require('path');
-const fs = require('fs');
+import { createConnection } from '../../shared/prisma';
+import { InitRole } from '../../../seeds';
 
 export default class SeedService {
+    initRole: InitRole;
+
+    constructor() {
+        const prisma = createConnection();
+        this.initRole = new InitRole(prisma);
+    }
+
     public async create() {
-        console.log('seed');
-        const seedDir = path.join(__dirname, '../../seeds');
-    
-        const filenames = fs.readdirSync(seedDir);
-        const _filenames = filenames.sort();
-    
-        for (const filename of _filenames) {
-            if (!filename.includes('index')) {
-                const seedFile = require(path.join(seedDir, filename));
-    
-                if (seedFile.seed) {
-                    await seedFile.seed();
-                }
-            }
-        }
+       this.initRole.seed();
     }
 }
