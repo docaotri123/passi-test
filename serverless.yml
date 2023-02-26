@@ -82,6 +82,5 @@ layers:
 functions:
   # - ${file(resources/warm-up.yml)}
   # - ${file(resources/functions/auth.yml)}
+  - ${file(resources/functions/function.yml)}
   - ${file(resources/functions/user.yml)}
-  # - ${file(resources/functions/inventory.yml)}
-  # - ${file(resources/functions/invoice.yml)}

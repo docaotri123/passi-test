@@ -1,0 +1,3 @@
+seed:
+  handler: src/functions/v1/seed.create
+  description: seed data
