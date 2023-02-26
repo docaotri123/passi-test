@@ -31,6 +31,8 @@ readdir(seedDir, async (error, filenames) => {
     }
 
     const _filenames = filenames.sort();
+    console.log(filenames);
+    
 
     for (const filename of _filenames) {
         if (filename !== 'index.ts' && filename.slice(-3) === '.ts') {

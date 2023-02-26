@@ -1,6 +1,6 @@
 import * as path from 'path'
-import { createConnection } from '../src/shared/prisma';
-import { ROLE } from '../src/utils/constant';
+import { createConnection } from '../shared/prisma';
+import { ROLE } from '../utils/constant';
 
 const prisma = createConnection();
 const up = async () => {
