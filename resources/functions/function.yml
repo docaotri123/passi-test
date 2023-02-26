@@ -1,3 +1,6 @@
 seed:
   handler: src/functions/v1/seed.create
   description: seed data
+migration:
+  handler: src/functions/v1/migration.create
+  description: run migration

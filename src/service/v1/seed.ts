@@ -10,6 +10,6 @@ export default class SeedService {
     }
 
     public async create() {
-       this.initRole.seed();
+       await this.initRole.seed();
     }
 }

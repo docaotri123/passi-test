@@ -5,8 +5,7 @@
     "offline": "sls offline start --stage local --httpPort 5000 --aws-profile dctri-user-admin",
     "seed:local": "ts-node seeds stage=local",
     "seed:dev": "sls invoke -f seed --stage dev",
-    "migration:local": "ts-node run_migration_files stage=local",
-    "migration:dev": "ts-node run_migration_files stage=dev",
+    "migration:dev": "sls invoke -f migration --stage dev",
     "deploy:test": "sls deploy --stage dev --aws-profile dctri-user-admin --verbose",
     "deploy:dev": "sls deploy --stage dev --verbose"
   },
